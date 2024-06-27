@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 20:06:55 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/27 18:21:59 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/06/27 19:32:05 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main (void)
 {
     int *num = malloc(sizeof(int));
     if (!num)
-        return 1;
+        return NULL;
 
     *num = 42;
     t_list *lista = ft_lstnew(num);
@@ -41,5 +41,3 @@ void printing(void *content)
     printf("%d\n", *(int *)content);
     
 }
-
-

@@ -7,10 +7,8 @@ void printing(void *content);
 
 // definimos el struct para la lista enlazada
 
-/*
-typedef struct s_list 
+typedef struct s_stack
 {
-    int *content;
-    struct s_list *next;
-} t_list;
-*/
+	int			    content;
+	struct s_stack	*next;
+}	t_stack;
