@@ -9,7 +9,7 @@ LIBFT_DIR = .
 CFLAGS += -I.
 
 # todos los sourcefiles que queraos añadir
-SRCS = push_swap.c
+SRCS = push_swap.c stackOps.c push_utils.c
 
 REMOVE = rm -rf
 

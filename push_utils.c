@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/27 17:02:36 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/06/28 20:30:59 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,44 @@
 
 // incluir atoi, operaciones de listas. 
 
-/*
-int ft_matoi(char *nptr)
+void	ft_lstadd_back(t_stack **lst, t_stack *new)
 {
-    // convertir el numero pasado a int.
-    
-    while (*nptr)
-    {
+	t_stack	*aux;
 
-        
-    } 
-
-
-
-
-    return ();
+	aux = *lst;
+	if (!lst)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	while (aux->next)
+		aux = aux->next;
+	aux->next = new;
 }
-*/
+
+
+void	ft_lstiter(t_stack *lst, void (*f)(int))
+{
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
+}
+
+t_stack	*ft_lstnew(int content)
+{
+	t_stack	*new;
+
+	new = (t_stack *) malloc(sizeof(t_stack));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
 
 int	ft_atoi(const char *nptr)
 {
@@ -53,4 +74,33 @@ int	ft_atoi(const char *nptr)
 		i ++;
 	}
 	return (res * o);
+}
+
+int ft_lstsize(t_stack *stack)
+{
+	int count;
+
+	count = 0;
+	while(stack)
+	{
+		count++;
+		stack = stack -> next;		
+	}
+	return count;
+}
+
+void	ft_lstadd_front (t_stack **lst, t_stack *new)
+{
+	// t_stack	*aux;
+
+	// aux = *lst;
+	if (!lst)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	new -> next = *lst;
+	*lst = new;
 }
