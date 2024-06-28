@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 19:02:17 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/28 20:32:33 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/06/28 22:02:46 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,26 @@ char *push_b (t_stack **stackA, t_stack **stackB)
     return ("pb");
 }
 */
+
+// movemos el puntero hasta que llega a null pero intentamos leer un null
 char *rotate_a (t_stack **stackA)
 {
-    int num;
+
+    if(stackA == NULL || *stackA == NULL ||(*stackA) ->next == NULL)
+        return ("ra");
+
+    t_stack *aux;
+    t_stack *first;
+    aux = *stackA;
+    first = *stackA;
+
+    while (aux -> next)
+        aux = aux -> next;
     
-    num = (*stackA) ->content;   
-    while (*stackA)
-    {
-        *stackA = (*stackA) ->next;
-    }
-    (*stackA) ->content = num;
-    
+    *stackA = first -> next;
+    aux -> next = first;
+    first -> next = NULL; 
+
     return ("ra");
 }
 
