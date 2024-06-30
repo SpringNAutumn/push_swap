@@ -26,3 +26,4 @@ char	*push_a (t_stack **stackA, t_stack **stackB);
 char	*swap_ab (t_stack **stackA, t_stack **stackB);
 char	*swap_b (t_stack **stackB);
 char	*swap_a (t_stack **stackA);
+void	rellenar_stacks(t_stack **stack, char *nums[]);

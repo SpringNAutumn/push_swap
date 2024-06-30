@@ -6,122 +6,114 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 19:02:17 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/28 22:02:46 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/06/30 21:58:38 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
-
 char *swap_a (t_stack **stackA)
 {   
-    t_stack *aux;
     t_stack *first;
-    int numaux;
-
-
-    first = stackA;
-    numaux = 0;
-    aux = *stackA;
-    if(!stackA || aux -> next == NULL)
-        return (NULL);
-    else
-    {
-        *aux = *aux -> next;
-        numaux = aux -> content;
-        
-        aux ->content = first -> content;
-        first -> content = numaux;
-    }
+    t_stack *aux;
     
-    return ("sa");
+    first = *stackA;
+    aux = (*stackA) -> next; 
+    first -> next = first -> next -> next;
+    aux -> next = first;
+    *stackA = aux;
+    
+    return ("sa\n");
 }
+
 
 char *swap_b (t_stack **stackB)
 {
-    t_stack *aux;
     t_stack *first;
-    int numaux;
+    t_stack *aux;
+    
+    first = *stackB;
+    aux = (*stackB) -> next;
+    first -> next = first -> next -> next;
+    aux -> next = first;
+    *stackB = aux;
 
-
-    first = stackB;
-    numaux = 0;
-    aux = *stackB;
-    if(!stackB || aux -> next == NULL)
-        return (NULL);
-    else
-    {
-        *aux = *aux -> next;
-        numaux = aux -> content;
-        
-        aux ->content = first -> content;
-        first -> content = numaux;
-    }
-    return ("sb");
+    return ("sb\n");
 }
 
 char *swap_ab (t_stack **stackA, t_stack **stackB)
 {
+ 
+ t_stack *first;
     t_stack *aux;
-    t_stack *first;
-    int numaux;
-
-    first = stackB;
-    numaux = 0;
-    aux = *stackB;
-    if(!stackB || aux -> next == NULL)
-        return (NULL);
-    else
-    {
-        *aux = *aux -> next;
-        numaux = aux -> content;
-        
-        aux ->content = first -> content;
-        first -> content = numaux;
-    }
     
-    first = stackA;
-    numaux = 0;
-    aux = *stackA;
-    if(!stackA || aux -> next == NULL)
-        return (NULL);
-    else
-    {
-        *aux = *aux -> next;
-        numaux = aux -> content;
-        
-        aux ->content = first -> content;
-        first -> content = numaux;
-    }
-    return ("ss");
+    first = *stackA;
+    aux = (*stackA) -> next; 
+    first -> next = first -> next -> next;
+    aux -> next = first;
+    *stackA = aux;
+    
+    first = *stackB;
+    aux = (*stackB) -> next; 
+    first -> next = first -> next -> next;
+    aux -> next = first;
+    *stackB = aux;
+    
+    return ("ss\n");
 }
 
 char *push_a (t_stack **stackA, t_stack **stackB)
 {
-    if (!stackB)
-        return(NULL);
-    else
-        ft_lstadd_front(&stackA,stackB);
-    return ("pa");
+   t_stack *primero;
+
+   if(!stackA || !stackB || !(*stackB))
+		return (NULL);
+
+   primero = *stackB;
+   *stackB = primero ->next;
+
+	if(!(*stackA))
+	{
+		*stackA = primero;
+		primero -> next = NULL;
+	}
+	else
+	{
+		primero -> next = *stackA;
+		*stackA = primero;
+	}
+	return ("pa");
 }
 
 char *push_b (t_stack **stackA, t_stack **stackB)
 {
-    if(!stackA)
-        return(NULL);
-    else
-        ft_lstadd_front(&stackB, stackA);
-    return ("pb");
-}
-*/
+    t_stack *primero;
 
-// movemos el puntero hasta que llega a null pero intentamos leer un null
+
+	 if(!stackB || !stackA || !(*stackA))
+		return (NULL);
+
+    primero = *stackA;
+    *stackA = primero -> next;
+	
+	if(!*(stackB))
+	{
+		*stackB = primero;
+		primero -> next = NULL;
+	}
+	else
+    {
+		primero -> next = *stackB;
+		*stackB = primero;
+	}
+	return ("pb");
+}
+
 char *rotate_a (t_stack **stackA)
 {
 
     if(stackA == NULL || *stackA == NULL ||(*stackA) ->next == NULL)
-        return ("ra");
+        return ("ra\n");
 
     t_stack *aux;
     t_stack *first;
@@ -135,101 +127,139 @@ char *rotate_a (t_stack **stackA)
     aux -> next = first;
     first -> next = NULL; 
 
-    return ("ra");
+    return ("ra\n");
 }
 
 char *rotate_b (t_stack **stackB)
 {
-    int num;
-    
-    num = (*stackB) ->content;
-    while (*stackB)
-    {
-        *stackB = (*stackB) ->next;
-    }
-    (*stackB) ->content = num;
+    if(stackB == NULL || *stackB == NULL ||(*stackB) ->next == NULL)
+        return ("rb\n");
+   
+   t_stack *first;
+   t_stack *aux;
 
-    return ("rb");
+    aux = *stackB;
+    first = *stackB;
+
+    while (aux -> next)
+	{
+        aux = aux -> next;
+	}
+	
+    *stackB = first ->next;
+    aux -> next = first;
+	first -> next = NULL;
+    
+    return ("rb\n");
 }
 
 char *rotate_ab (t_stack **stackA, t_stack **stackB)
-{
-      int num;
+{  
+    if(stackB == NULL || *stackB == NULL ||(*stackB) ->next == NULL 
+    || stackA == NULL || *stackA== NULL  ||(*stackA) ->next == NULL)
+        return ("rr\n");
     
-    num = (*stackA) ->content;
-    while (*stackA)
-    {
-        *stackA = (*stackA) ->next;
-    }
-    (*stackA) ->content = num;
+    t_stack *aux;
+    t_stack *first;
+    aux = *stackA;
+    first = *stackA;
 
-       num = (*stackB) ->content;
-    while (*stackB)
-    {
-        *stackB = (*stackB) ->next;
-    }
-    (*stackB) ->content = num;
+    while (aux -> next)
+        aux = aux -> next;
+    
+    *stackA = first -> next;
+    aux -> next = first;
+    first -> next = NULL;
 
-    return ("rr");    
+    aux = *stackB;
+    first = *stackB;
+
+    while (aux -> next -> next)
+        aux = aux -> next;
+    
+    *stackB = aux -> next;
+    (*stackB) -> next = first;
+    aux -> next = NULL;
+
+    return ("rr\n");
 }
-/*
 
 char *reverse_rotate_a (t_stack **stackA)
 {
-    t_stack *ultimo;
-    while((*stackA) -> next)
-    {
-        *stackA = (*stackA) -> next;
-    }
-      if(!(*stackA) -> next -> next)
-           ultimo = stackA;
 
-    (*stackA) -> next = *stackA;
-    ultimo -> next = NULL;
+    if (!stackA || !(*stackA) || !((*stackA) -> next))
+        return ("rra\n");
     
+    t_stack *aux;
+    t_stack *first;
+
+    aux = *stackA;
+    
+    while(aux -> next -> next)
+    {
+        aux = aux -> next;
+    }
+    first = aux -> next;
+    first -> next = *stackA;
+    *stackA = first;
+    aux -> next = NULL;
+
     return ("rra");
 }
 
 char *reverse_rotate_b(t_stack **stackB)
 {
+    if (!stackB || !(*stackB) || !((*stackB) -> next))
+        return ("rrb\n");
 
-    t_stack *ultimo;
-    while((*stackB) -> next)
-    {
-        *stackB = (*stackB) -> next;
-    }
-      if(!(*stackB) -> next -> next)
-           ultimo = stackB;
+    t_stack *aux;
+    t_stack *first;
 
-    (*stackB) -> next = *stackB;
-    ultimo -> next = NULL;
+    aux = *stackB;
     
-    return ("rra");
+    while(aux -> next -> next)
+    {
+        aux = aux -> next;
+    }
+    first = aux -> next;
+    first -> next = *stackB;
+    *stackB = first;
+    aux -> next = NULL;
+
+    return ("rrb");
 }
 
 char *reverse_rotate_ab(t_stack **stackA, t_stack **stackB)
 {
-    t_stack *ultimo;
-    while((*stackA) -> next)
+
+    if (!stackB || !(*stackB) || !((*stackB) -> next) || !stackA || !(*stackA) || !((*stackA) -> next))
+        return ("rrr\n");
+    
+    t_stack *aux;
+    t_stack *first;
+
+    aux = *stackA;
+    
+    while(aux -> next -> next)
     {
-        *stackA = (*stackA) -> next;
+        aux = aux -> next;
     }
-      if(!(*stackA) -> next -> next)
-           ultimo = stackA;
+    first = aux -> next;
+    first -> next = *stackA;
+    *stackA = first;
+    aux -> next = NULL;
 
-    (*stackA) -> next = *stackA;
-    ultimo -> next = NULL;
 
-    while((*stackB) -> next)
+    aux = *stackB;
+    
+    while(aux -> next -> next)
     {
-        *stackB = (*stackB) -> next;
+        aux = aux -> next;
     }
-      if(!(*stackB) -> next -> next)
-           ultimo = stackB;
-
-    (*stackB) -> next = *stackB;
-    ultimo -> next = NULL;
+    first = aux -> next;
+    first -> next = *stackB;
+    *stackB = first;
+    aux -> next = NULL;
     
     return ("rrr");
 }
-*/
