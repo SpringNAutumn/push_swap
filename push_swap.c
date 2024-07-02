@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/02 20:32:42 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/02 22:21:15 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,25 +110,35 @@ void smallSorting (t_stack **stackA)
 	}
 }
 
-void sortingAlgorith(t_stack **stackA, t_stack **stackB)
+void sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB)
 {
 	t_stack *currele;
 	while (*stackA)
 	{
 		currele = temPop(stackA);
-		/*
-		printf("elemento currele %d \n", currele ->content);
-		fflush(stdout);
-		*/
 		while ((*stackB) && (*stackB) -> content > currele -> content)
 		{
-			push_a(stackA, stackB);
+			printf("%s",push_a(stackA, stackB));
 		}
 		currele -> next = (*stackB);
 		*stackB = currele;
 	}
 	while(*stackB)
-		push_a(stackA,stackB);
+		printf("%s",push_a(stackA,stackB));
+}
+void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
+{
+	while (*stackA)
+	{
+		while ((*stackB) && (*stackB) -> content > currele -> content)
+		{
+			printf("%s",push_a(stackA, stackB));
+		}
+		currele -> next = (*stackB);
+		*stackB = currele;
+	}
+	while(*stackB)
+		printf("%s",push_a(stackA,stackB));
 }
 
 t_stack *temPop(t_stack **stack)

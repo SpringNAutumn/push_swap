@@ -29,6 +29,7 @@ char	*swap_a (t_stack **stackA);
 void	rellenar_stacks(t_stack **stack, char *nums[]);
 void	sorting (t_stack **stackA);
 int		getOrder(t_stack **stack);
-void	sortingAlgorith(t_stack **stackA, t_stack **stackB);
+void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);
+void	sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB);
 t_stack	*temPop(t_stack **stack);
 void	smallSorting (t_stack **stackA);

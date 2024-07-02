@@ -1,0 +1,26 @@
+stack A:
+
+9
+10
+20
+
+temp Stack:
+
+
+			si B esta vacio pushear de A a B. OK
+			si no esta vacio pero B es menor que A, 
+			se pushea de A a B. OK  
+			si B es mayor que A, hacemos swap B swap A  OK 
+
+ 
+stack B:
+
+10
+9
+2
+4
+
+
+
+
+
