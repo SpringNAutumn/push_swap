@@ -1,8 +1,11 @@
 ## pasos a seguir ##
 
 
-* para pruebas? crear funcion para poblar el stack (sin duplicados)
+* ordenar diferentes casos.
+   * podemos ordenar el stack con
+   
+   
+   10 5 2 5 6 1 3
 
-* crear las operaciones de ordenacion 
 
-* crear los diferentes algoritmos de ordenacion en funcion del tamaño del stack
+   algorithm for calculating the movements and moving the element to the position.

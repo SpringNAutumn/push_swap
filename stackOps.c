@@ -6,71 +6,66 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 19:02:17 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/30 21:58:38 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:47:46 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 char *swap_a (t_stack **stackA)
-{   
-    t_stack *first;
-    t_stack *aux;
-    
-    first = *stackA;
-    aux = (*stackA) -> next; 
-    first -> next = first -> next -> next;
-    aux -> next = first;
-    *stackA = aux;
-    
-    return ("sa\n");
-}
+{
+	t_stack *first;
+	t_stack *aux;
 
+	first = *stackA;
+	aux = (*stackA) -> next; 
+	first -> next = first -> next -> next;
+	aux -> next = first;
+	*stackA = aux;
+	return ("sa\n");
+}
 
 char *swap_b (t_stack **stackB)
 {
-    t_stack *first;
-    t_stack *aux;
-    
-    first = *stackB;
-    aux = (*stackB) -> next;
-    first -> next = first -> next -> next;
-    aux -> next = first;
-    *stackB = aux;
+	t_stack *first;
+	t_stack *aux;
 
-    return ("sb\n");
+	first = *stackB;
+	aux = (*stackB) -> next;
+	first -> next = first -> next -> next;
+	aux -> next = first;
+	*stackB = aux;
+
+	return ("sb\n");
 }
 
 char *swap_ab (t_stack **stackA, t_stack **stackB)
 {
- 
- t_stack *first;
-    t_stack *aux;
-    
-    first = *stackA;
-    aux = (*stackA) -> next; 
-    first -> next = first -> next -> next;
-    aux -> next = first;
-    *stackA = aux;
-    
-    first = *stackB;
-    aux = (*stackB) -> next; 
-    first -> next = first -> next -> next;
-    aux -> next = first;
-    *stackB = aux;
-    
-    return ("ss\n");
+	t_stack *first;
+	t_stack *aux;
+	
+	first = *stackA;
+	aux = (*stackA) -> next; 
+	first -> next = first -> next -> next;
+	aux -> next = first;
+	*stackA = aux;
+	first = *stackB;
+	aux = (*stackB) -> next;
+	first -> next = first -> next -> next;
+	aux -> next = first;
+	*stackB = aux;
+	return ("ss\n");
 }
 
 char *push_a (t_stack **stackA, t_stack **stackB)
 {
-   t_stack *primero;
+	t_stack *primero;
 
-   if(!stackA || !stackB || !(*stackB))
+	if(!stackA || !stackB || !(*stackB))
 		return (NULL);
 
-   primero = *stackB;
-   *stackB = primero ->next;
+	primero = *stackB;
+	*stackB = primero ->next;
 
 	if(!(*stackA))
 	{
@@ -82,15 +77,14 @@ char *push_a (t_stack **stackA, t_stack **stackB)
 		primero -> next = *stackA;
 		*stackA = primero;
 	}
-	return ("pa");
+	return ("pa\n");
 }
 
 char *push_b (t_stack **stackA, t_stack **stackB)
 {
-    t_stack *primero;
-
-
-	 if(!stackB || !stackA || !(*stackA))
+	t_stack *primero;
+	
+	if(!stackB || !stackA || !(*stackA))
 		return (NULL);
 
     primero = *stackA;
@@ -106,7 +100,7 @@ char *push_b (t_stack **stackA, t_stack **stackB)
 		primero -> next = *stackB;
 		*stackB = primero;
 	}
-	return ("pb");
+	return ("pb\n");
 }
 
 char *rotate_a (t_stack **stackA)
@@ -145,9 +139,9 @@ char *rotate_b (t_stack **stackB)
 	{
         aux = aux -> next;
 	}
-	
-    *stackB = first ->next;
+    
     aux -> next = first;
+	(*stackB) = first ->next;
 	first -> next = NULL;
     
     return ("rb\n");
@@ -204,7 +198,7 @@ char *reverse_rotate_a (t_stack **stackA)
     *stackA = first;
     aux -> next = NULL;
 
-    return ("rra");
+    return ("rra\n");
 }
 
 char *reverse_rotate_b(t_stack **stackB)
@@ -226,40 +220,33 @@ char *reverse_rotate_b(t_stack **stackB)
     *stackB = first;
     aux -> next = NULL;
 
-    return ("rrb");
+    return ("rrb\n");
 }
 
 char *reverse_rotate_ab(t_stack **stackA, t_stack **stackB)
 {
+	if (!stackB || !(*stackB) || !((*stackB) -> next) || !stackA || !(*stackA) || !((*stackA) -> next))
+		return ("rrr\n");
+	t_stack *aux;
+	t_stack *first;
 
-    if (!stackB || !(*stackB) || !((*stackB) -> next) || !stackA || !(*stackA) || !((*stackA) -> next))
-        return ("rrr\n");
-    
-    t_stack *aux;
-    t_stack *first;
-
-    aux = *stackA;
-    
-    while(aux -> next -> next)
-    {
-        aux = aux -> next;
-    }
-    first = aux -> next;
-    first -> next = *stackA;
-    *stackA = first;
-    aux -> next = NULL;
-
-
-    aux = *stackB;
-    
-    while(aux -> next -> next)
-    {
-        aux = aux -> next;
-    }
-    first = aux -> next;
-    first -> next = *stackB;
-    *stackB = first;
-    aux -> next = NULL;
-    
-    return ("rrr");
+	aux = *stackA;
+	while(aux -> next -> next)
+	{
+		aux = aux -> next;
+	}
+	first = aux -> next;
+	first -> next = *stackA;
+	*stackA = first;
+	aux -> next = NULL;
+	aux = *stackB;
+	while(aux -> next -> next)
+	{
+		aux = aux -> next;
+	}
+	first = aux -> next;
+	first -> next = *stackB;
+	*stackB = first;
+	aux -> next = NULL;
+	return ("rrr\n");
 }

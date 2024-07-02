@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/30 21:28:57 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:32:42 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,57 @@
 
 int main (int argc, char *argv[])
 {
-    t_stack *stackA;
-    t_stack *stackB;
+	t_stack *stack_A;
+	t_stack *stack_B;
 
-    stackA = NULL;
-    stackB = NULL;
-    printf("el numero de parametros %d \n", argc);
-    
-    rellenar_stacks(&stackA, argv);
+	stack_A = NULL;
+	stack_B = NULL;
+	
+	if (argc > 1)
+		rellenar_stacks(&stack_A, argv);
 
-    printf("Exec sa \n");
-    swap_a(&stackA);
+	ft_lstiter(stack_A, printing);
 
-    printf("Exec pb pb pb \n");
-
-    push_b(&stackA, &stackB);
-    push_b(&stackA, &stackB);
-    push_b(&stackA, &stackB);
-
-      printf("STACK B: \n");
-    if(stackB)
-       ft_lstiter(stackB, printing);
-    printf("STACK A: \n");
-    if(stackA)
-        ft_lstiter(stackA, printing);
-
-    printf("Exec ra rb \n");
-    rotate_a(&stackA);
-    rotate_b(&stackB);
-
-
-      printf("STACK B: \n");
-    if(stackB)
-       ft_lstiter(stackB, printing);
-    printf("STACK A: \n");
-    if(stackA)
-        ft_lstiter(stackA, printing);
-    
-    printf("Exec rra rrb \n");
-    reverse_rotate_a(&stackA);
-    reverse_rotate_b(&stackB);
-
-      printf("STACK B: \n");
-    if(stackB)
-       ft_lstiter(stackB, printing);
-    printf("STACK A: \n");
-    if(stackA)
-        ft_lstiter(stackA, printing);
-
-    printf("Exec sa \n");
-    swap_a(&stackA);
-
-      printf("STACK B: \n");
-    if(stackB)
-       ft_lstiter(stackB, printing);
-    printf("STACK A: \n");
-    if(stackA)
-        ft_lstiter(stackA, printing);
-
-    printf("Exec pa pa pa \n");
-    push_a(&stackA,&stackB);
-    push_a(&stackA,&stackB);
-    push_a(&stackA,&stackB);
-    
-    printf("STACK B: \n");
-    if(stackB)
-       ft_lstiter(stackB, printing);
-    printf("STACK A: \n");
-    if(stackA)
-        ft_lstiter(stackA, printing);
-
+	printf("aqui llegamos");
+	fflush(stdout);
+	//smallSorting(&stack_A);
+/*
+    if (getOrder(&stack_A) == 0)
+	{
+        printf("el stack se ordeno correctamente \n");
+		ft_lstiter(stack_A, printing);
+	}
+	else
+	{
+		printf("algo ha fallado \n");
+		ft_lstiter(stack_A, printing);
+	}
+*/	
+	// nos devuelve el stackA ordenado en B :o
+	//sleep(20);
+	sortingAlgorith(&stack_A, &stack_B);
+	//printf("holaquetal");
+	ft_lstiter(stack_A, printing);
     return (0);
 }
 
 void printing (int content)
 {
     printf("%d\n", content);
+}
+
+int getOrder(t_stack **stack)
+{
+    t_stack *aux;
+
+    aux = *stack;
+    while(aux -> next)
+    {
+        if ((aux) -> content > aux -> next -> content)
+            return 1;
+        aux = aux -> next;
+    }
+    return 0;
 }
 
 void rellenar_stacks(t_stack **stack, char *nums[])
@@ -110,4 +85,61 @@ void rellenar_stacks(t_stack **stack, char *nums[])
             ft_lstadd_back(&(*stack), añadir);
         i++;
     }
+}
+
+void smallSorting (t_stack **stackA)
+{
+	while (getOrder(stackA) != 0)
+	{
+		if (ft_lstsize(*stackA) == 2)
+		{
+			if ((*stackA) -> content > (*stackA) -> next ->content)
+				swap_a(stackA);
+		}
+		else if (ft_lstsize(*stackA) == 3)
+			{
+				if ((*stackA) -> content > (*stackA) -> next -> content)
+					swap_a(stackA);
+				if ((*stackA) -> next -> content > (*stackA) -> next -> next -> content)
+				{
+					reverse_rotate_a(stackA);
+					printf("operacion \n");
+					ft_lstiter(*stackA, printing);
+				}
+			}
+	}
+}
+
+void sortingAlgorith(t_stack **stackA, t_stack **stackB)
+{
+	t_stack *currele;
+	while (*stackA)
+	{
+		currele = temPop(stackA);
+		/*
+		printf("elemento currele %d \n", currele ->content);
+		fflush(stdout);
+		*/
+		while ((*stackB) && (*stackB) -> content > currele -> content)
+		{
+			push_b(stackA, stackB);
+		}
+		currele -> next = (*stackB);
+		*stackB = currele;
+	}
+	while(*stackB)
+		push_a(stackA,stackB);
+}
+
+t_stack *temPop(t_stack **stack)
+{
+	t_stack *aux;
+
+	if(!stack || !(*stack))
+		return (NULL);
+
+	aux = *stack;
+	*stack = (*stack) -> next;
+	aux -> next = NULL;
+	return (aux);
 }

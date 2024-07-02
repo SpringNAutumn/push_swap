@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/06/30 19:19:54 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:47:48 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_lstadd_back(t_stack **lst, t_stack *new)
 		aux = aux->next;
 	aux->next = new;
 }
-
 
 void	ft_lstiter(t_stack *lst, void (*f)(int))
 {
@@ -91,8 +90,6 @@ int ft_lstsize(t_stack *stack)
 
 void	ft_lstadd_front (t_stack **lst, t_stack *new)
 {
-	// t_stack	*aux;
-	// aux = *lst;
 	if (!lst)
 		return ;
 	if (!*lst)
