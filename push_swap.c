@@ -77,12 +77,12 @@ void rellenar_stacks(t_stack **stack, char *nums[])
     i = 1;
     while(nums[i])
     {
-		t_stack *añadir = ft_lstnew(ft_atoi(nums[i]));
+		t_stack *anadir = ft_lstnew(ft_atoi(nums[i]));
           
         if(!(*stack))
-            *stack = añadir;
+            *stack = anadir;
         else
-            ft_lstadd_back(&(*stack), añadir);
+            ft_lstadd_back(&(*stack), anadir);
         i++;
     }
 }
@@ -122,7 +122,7 @@ void sortingAlgorith(t_stack **stackA, t_stack **stackB)
 		*/
 		while ((*stackB) && (*stackB) -> content > currele -> content)
 		{
-			push_b(stackA, stackB);
+			push_a(stackA, stackB);
 		}
 		currele -> next = (*stackB);
 		*stackB = currele;
