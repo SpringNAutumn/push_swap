@@ -1,11 +1,18 @@
 ## pasos a seguir ##
 
 
-* ordenar diferentes casos.
-   * podemos ordenar el stack con
-   
-   
-   10 5 2 5 6 1 3
+* orenacion por comparacion utilizando push y swaps.
+
+Algoritmo eficiente ->
+	Calcular antes de realizar operaciones
+	calcular costes, contaremos y calcularemos antes de mover a A,
+			Si movemos un maximo, tiene que posicionarse por encima del maximo del stackA,
+		las operaciones se calcularan en base a cuantos movimientos debemos de llevar a cabo hasta mover el elemento, al maximo o minimo o maximo. 
 
 
-   algorithm for calculating the movements and moving the element to the position.
+				pseudocodigo:
+					si B esta vacio -> push dos elementos
+					antes de push to B calculamos,
+
+calculamos coste en base a numero movimientos en A.
+

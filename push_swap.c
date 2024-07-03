@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/02 22:21:15 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:02:16 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ int main (int argc, char *argv[])
 	
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-
-	ft_lstiter(stack_A, printing);
-
-	printf("aqui llegamos");
-	fflush(stdout);
+		
+	//ft_lstiter(stack_A, printing);
+	
 	//smallSorting(&stack_A);
-/*
+	/*
+	
     if (getOrder(&stack_A) == 0)
 	{
         printf("el stack se ordeno correctamente \n");
@@ -39,12 +38,16 @@ int main (int argc, char *argv[])
 		printf("algo ha fallado \n");
 		ft_lstiter(stack_A, printing);
 	}
-*/	
-	// nos devuelve el stackA ordenado en B :o
-	//sleep(20);
-	sortingAlgorith(&stack_A, &stack_B);
-	//printf("holaquetal");
-	ft_lstiter(stack_A, printing);
+	*/
+
+	if (argc <=3)
+		smallSorting(&stack_A);
+	else 
+		sortingAlgorithNoTmp(&stack_A, &stack_B);
+		
+	//printf(" NUMERO OPERACIONES PARA ORDENAR EL STACK\n %d", numberOps);
+	//ft_lstiter(stack_A, printing);
+	//printf("numero de argumentos %d", argc);
     return (0);
 }
 
@@ -53,7 +56,7 @@ void printing (int content)
     printf("%d\n", content);
 }
 
-int getOrder(t_stack **stack)
+int isOrder(t_stack **stack)
 {
     t_stack *aux;
 
@@ -89,6 +92,9 @@ void rellenar_stacks(t_stack **stack, char *nums[])
 
 void smallSorting (t_stack **stackA)
 {
+	if(!stackA || !(*stackA))
+		return ;
+	
 	while (getOrder(stackA) != 0)
 	{
 		if (ft_lstsize(*stackA) == 2)
@@ -101,11 +107,7 @@ void smallSorting (t_stack **stackA)
 				if ((*stackA) -> content > (*stackA) -> next -> content)
 					swap_a(stackA);
 				if ((*stackA) -> next -> content > (*stackA) -> next -> next -> content)
-				{
-					reverse_rotate_a(stackA);
-					printf("operacion \n");
-					ft_lstiter(*stackA, printing);
-				}
+					printf("%s",reverse_rotate_a(stackA));
 			}
 	}
 }
@@ -126,16 +128,17 @@ void sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB)
 	while(*stackB)
 		printf("%s",push_a(stackA,stackB));
 }
+
 void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
 {
 	while (*stackA)
 	{
-		while ((*stackB) && (*stackB) -> content > currele -> content)
+		while ((*stackB) && (*stackB) -> content > (*stackA) -> content)
 		{
 			printf("%s",push_a(stackA, stackB));
+			printf("%s",swap_a(stackA));
 		}
-		currele -> next = (*stackB);
-		*stackB = currele;
+		printf("%s",push_b(stackA,stackB));
 	}
 	while(*stackB)
 		printf("%s",push_a(stackA,stackB));
@@ -152,4 +155,49 @@ t_stack *temPop(t_stack **stack)
 	*stack = (*stack) -> next;
 	aux -> next = NULL;
 	return (aux);
+}
+
+void goodSort (t_stack **stackA, t_stack **stackB)
+{
+
+	t_stack *auxiA;
+	t_stack *auxiB;
+
+
+	auxiA = *stackA;
+	auxiB = *stackB;
+	while (isOrder(*stackA) == 1 || ft_lstsize(*stackA)> 3)
+	{
+		if(!*stackB)
+			push_b(stackA, stackB), push_b(stackA,stackB);
+
+		while(auxiA -> next)
+			{
+				// calcular para cada posicion del stack A el coste de meter el numero
+				// en la posicion ideal en B, teniendo en cuenta que la posicion ideal es
+				// la que está el numero ordenado con respecto al inmediatamente menor 				
+			// before push_b
+				
+			
+
+			}
+	}
+}
+
+// ver los stacks como listas dobles
+	// si es nuevo maximo, in
+
+// no tenemos que encontrar la posición correcta, si lo situamos encima del 
+void getRightPos (int num, t_stack **stack)
+{
+	int currentMax;
+
+	currentMax = (*stack) -> content;
+	while((*stack) -> next)
+	{
+		if (num > currentMax && (*stack) -> content > currentMax);
+				currentMax = (*stack) -> content;
+
+		*stack = (*stack) -> next;
+	}
 }

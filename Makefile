@@ -30,3 +30,8 @@ fclean: clean
 #Hacemos el ejecutable
 $(NAME):$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+
+t: test
+test: all
+	@cp $(NAME) tester
+	@cd tester; bash push_swap_test_linux.sh

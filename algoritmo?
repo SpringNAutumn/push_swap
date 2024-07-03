@@ -1,22 +1,48 @@
-stack A:
-2
-5
-1
-10
+Algoritmo churro,
+
+mientras A no esté vacio:
+	bucle while interno OK
+	if B esta vacio 
+	pushear de A a B. OK
+	else esta vacio y B es menor que A, 
+	se pushea de A a B. OK  
+	si B es mayor que A, hacemos swap B swap A  OK
+	
+______________________________________________________________
+
+Algoritmo turko?
+
+*  pasar de stackA a stack B a la posicion idonea, cual es la posición idonea?
+	si el numero va a ser el máximo o el minimo la posición es arriba del stack, ya que esa posición será la mayor, si el numero 
+
+*  Si el nuevo numero en el stack b no va a ser el nuevo maximo o minimo,
+	¿ se insertará inmediatamente por encima del elemento menor a el?
+*
 
 
 
-temp Stack:
 
 
-			si B esta vacio pushear de A a B. OK
-			si no esta vacio pero B es menor que A, 
-			se pushea de A a B. OK  
-			si B es mayor que A, hacemos swap B swap A  OK
 
- 
-stack B:
-24
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+Algoritmo radix,
+	
+
 
 
 
