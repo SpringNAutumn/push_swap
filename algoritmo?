@@ -15,35 +15,17 @@ Algoritmo turko?
 *  pasar de stackA a stack B a la posicion idonea, cual es la posición idonea?
 	si el numero va a ser el máximo o el minimo la posición es arriba del stack, ya que esa posición será la mayor, si el numero 
 
-*  Si el nuevo numero en el stack b no va a ser el nuevo maximo o minimo,
-	¿ se insertará inmediatamente por encima del elemento menor a el?
-*
+
+// para mover arriba y poder hacer push, calculamos coste, hacemos operacion, o rrx si el elemento esta por debajo de la mitad del stack
+o rx si esta por encima.
 
 
+STACK A     STACK B
+    5		  13 
+    0		  10
+    9          4
+   20          
+______________________
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-Algoritmo radix,
-	
-
-
-
-
-
+	|					  				
+5 3 6 6 3 2 6 2 6 2 6 2 6 2 6 3 6

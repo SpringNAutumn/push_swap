@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/03 21:02:16 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:54:48 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,31 @@
 int main (int argc, char *argv[])
 {
 	t_stack *stack_A;
-	t_stack *stack_B;
+	//t_stack *stack_B;
 
 	stack_A = NULL;
-	stack_B = NULL;
+	//stack_B = NULL;
 	
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-		
-	//ft_lstiter(stack_A, printing);
-	
-	//smallSorting(&stack_A);
-	/*
-	
-    if (getOrder(&stack_A) == 0)
-	{
-        printf("el stack se ordeno correctamente \n");
-		ft_lstiter(stack_A, printing);
-	}
-	else
-	{
-		printf("algo ha fallado \n");
-		ft_lstiter(stack_A, printing);
-	}
-	*/
 
+
+// comprobacion de funciones
+	
+	
+	printf("posicion inicial %p \n" , (void*) (stack_A -> next -> next));
+		printf("posicion inicial %p \n" , (void*) &(stack_A));
+	
+	printf("posicion %d \n" , get_pos(&stack_A, stack_A -> next -> next));
+	//printf("%d", getMax(&stack_A));
+	//printf("%d", getMin(&stack_A));
+	//printf ("%d", getRightPos(4,stack_B));
+	/*
 	if (argc <=3)
 		smallSorting(&stack_A);
 	else 
 		sortingAlgorithNoTmp(&stack_A, &stack_B);
-		
-	//printf(" NUMERO OPERACIONES PARA ORDENAR EL STACK\n %d", numberOps);
-	//ft_lstiter(stack_A, printing);
-	//printf("numero de argumentos %d", argc);
+     */
     return (0);
 }
 
@@ -55,7 +47,7 @@ void printing (int content)
 {
     printf("%d\n", content);
 }
-
+/*
 int isOrder(t_stack **stack)
 {
     t_stack *aux;
@@ -69,6 +61,7 @@ int isOrder(t_stack **stack)
     }
     return 0;
 }
+*/
 
 void rellenar_stacks(t_stack **stack, char *nums[])
 {
@@ -89,7 +82,7 @@ void rellenar_stacks(t_stack **stack, char *nums[])
         i++;
     }
 }
-
+/*
 void smallSorting (t_stack **stackA)
 {
 	if(!stackA || !(*stackA))
@@ -128,7 +121,8 @@ void sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB)
 	while(*stackB)
 		printf("%s",push_a(stackA,stackB));
 }
-
+*/
+/*
 void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
 {
 	while (*stackA)
@@ -156,7 +150,14 @@ t_stack *temPop(t_stack **stack)
 	aux -> next = NULL;
 	return (aux);
 }
+*/
+/* TODO 
 
+	Movemos dos elementos a stackB, iteramos A, calculamos coste para num en funcion
+	de la posicion 
+
+*/
+/*
 void goodSort (t_stack **stackA, t_stack **stackB)
 {
 
@@ -166,38 +167,101 @@ void goodSort (t_stack **stackA, t_stack **stackB)
 
 	auxiA = *stackA;
 	auxiB = *stackB;
-	while (isOrder(*stackA) == 1 || ft_lstsize(*stackA)> 3)
+	while (isOrder(*stackA) == 1 || ft_lstsize(*stackA) > 3)
 	{
 		if(!*stackB)
-			push_b(stackA, stackB), push_b(stackA,stackB);
+		{
+			push_b(stackA, stackB);
+			push_b(stackA, stackB);
+		}
 
 		while(auxiA -> next)
 			{
-				// calcular para cada posicion del stack A el coste de meter el numero
-				// en la posicion ideal en B, teniendo en cuenta que la posicion ideal es
-				// la que está el numero ordenado con respecto al inmediatamente menor 				
-			// before push_b
+				// para el elemento calculamos coste guardamos el resultado,
+				// vemos cual es el menor resultado,
+						// ejecutamos operacion ->>> 
 				
+					
 			
-
 			}
 	}
 }
+*/
+// cuando pusheamos un numero que no es el nuevo minimo o nuevo maximo 
+// (el cual se pone encima del maximo del stackB),
+// tenemos que ponerlo por encima del inmediatamente menor al numero.
+// podemos o devolver la posicion del nodo en el stack, o devolver el nodo,
+// si devovlemos la posicion, se devuelve la posicion del currentMin. 
 
-// ver los stacks como listas dobles
-	// si es nuevo maximo, in
-
-// no tenemos que encontrar la posición correcta, si lo situamos encima del 
-void getRightPos (int num, t_stack **stack)
+t_stack *getRightPos (int num, t_stack **stack)
 {
-	int currentMax;
-
-	currentMax = (*stack) -> content;
+	int currentMin;
+	t_stack *nodo;
+	
+	currentMin = (*stack) -> content;
 	while((*stack) -> next)
 	{
-		if (num > currentMax && (*stack) -> content > currentMax);
-				currentMax = (*stack) -> content;
-
+		if((*stack) -> content > num)
+		{
+			(*stack) = (*stack) -> next;
+			continue;
+		}
+		else if ((*stack) -> content > currentMin)
+		{
+			currentMin = (*stack) -> content;
+			nodo = *stack;
+		}
 		*stack = (*stack) -> next;
 	}
+	return nodo;
 }
+
+int getMax (t_stack **stack)
+{
+	int max;
+
+	max = 0;
+	while((*stack) -> next)
+	{
+		if ((*stack) -> content > max)
+			max = (*stack) -> content;
+	
+	(*stack) = (*stack) -> next;
+	}
+	return max;
+}
+
+int getMin (t_stack **stack)
+{
+	int min;
+
+	min = 0;
+	while((*stack) -> next)
+	{
+		if ((*stack) -> content < min)
+			min = (*stack) -> content;
+	
+	(*stack) = (*stack) -> next;
+	}
+	return min;
+}
+/*
+int calculateCosts (t_stack **stackA, t_stack **stackB, t_stack *node)
+{
+	int cost;
+
+	cost = 0;
+	if (node -> content < getMin(stackB))
+		cost +=2;
+	else if (node -> content > getMax(stackB))
+		cost ++;
+	else 
+	{
+		if (get_pos(stackB, getRightPos(node -> content, stackB)) < (ft_lstsize(*stackB) / 2))
+			cost = (get_pos(stackB, getRightPos(node -> content, stackB)) - 1);
+		else
+			cost = ft_lstsize(*stackB) - get_pos(stackB, getRightPos(node -> content, stackB)) - 1;
+	}
+	return cost;
+}
+*/
