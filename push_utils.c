@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/04 19:51:45 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:09:44 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,16 @@ void	ft_lstadd_front (t_stack **lst, t_stack *new)
 int	get_pos (t_stack **list, t_stack *node)
 {
 	int pos;
+	t_stack *aux;
 
-	pos = 0;
-	while((*list) -> next)
+	pos = 1;
+	aux = *list;
+	while(aux != NULL)
 	{
-		 printf ("la funcion recibe estas direcciones :  %p %p", (void*)node, (void*)*list);
-		if (&(*list) == (&node))
+		if (aux == node)
 			break;
 		pos++;
-		*list = (*list) -> next;
+		aux = aux -> next;
 	}
 	return pos;
 }
-
-// 5 5 2

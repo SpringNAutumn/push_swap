@@ -41,6 +41,6 @@ void	smallSorting (t_stack **stackA);
 int		get_pos (t_stack **list, t_stack *node);
 int		getMax (t_stack **stack);
 int		getMin (t_stack **stack);
-int		calculateCosts (t_stack **stackA, t_stack **stackB, t_stack *node);
+int		calculateCosts (t_stack **stackB, t_stack *node);
 t_stack *getRightPos (int num, t_stack **stack);
 void	goodSort (t_stack **stackA, t_stack **stackB);
