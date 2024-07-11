@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/11 17:24:02 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:46:03 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,17 @@ int main (int argc, char *argv[])
 	t_stack *stack_A;
 	t_stack *stack_B;
 
+	char *arrelenar[] = {"0", "10", "5", "4", "1" , NULL};
+
 	stack_A = NULL;
 	stack_B = NULL;
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-/*
-	si stack es mayor a 3
-	->>>
-*/
-	// move to B two elements
-	while (ft_lstsize(stack_A) > 0)
-	{
-		while (stack_A != NULL)
-		{
-			int current_less_costly = __INT_MAX__;
-			t_stack *aux;
-			t_stack *nodetmove;
-			int cost = 0;
-			
-			aux = stack_A;
-			nodetmove = aux;
-			while(aux)
-			{
-				cost = calculateCostA(stack_A, aux);
-				cost += calculateCostB(stack_B,aux);
-				if (cost < current_less_costly)
-				{
-					current_less_costly = cost;
-					nodetmove = aux;
-				}
-				aux = aux -> next;
-			}
-			movingA(nodetmove,stack_A, stack_B);
-			movingB();
-			push_b();
-		}
 
-		// cuando están ordenados en B, pasamos todo hasta que B esta vacío.
-	}
+	rellenar_stacks(&stack_B,arrelenar);
+	bigAlgo(&stack_A, &stack_B);
+	
+	ft_lstiter(stack_B,printing);
     return (0);
 }
 
@@ -119,25 +92,6 @@ void smallSorting (t_stack **stackA)
 	}
 }
 
-void sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB)
-{
-	t_stack *currele;
-	while (*stackA)
-	{
-		currele = temPop(stackA);
-		while ((*stackB) && (*stackB) -> content > currele -> content)
-		{
-			printf("%s",push_a(stackA, stackB));
-		}
-		currele -> next = (*stackB);
-		*stackB = currele;
-	}
-	while(*stackB)
-		printf("%s",push_a(stackA,stackB));
-}
-*/
-
-/*
 void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
 {
 	while (*stackA)
@@ -153,32 +107,14 @@ void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
 		printf("%s",push_a(stackA,stackB));
 }
 
-t_stack *temPop(t_stack **stack)
-{
-	t_stack *aux;
 
-	if(!stack || !(*stack))
-		return (NULL);
+Movemos dos elementos a stackB, iteramos A, calculamos coste para num en funcion
+de la posicion.
 
-	aux = *stack;
-	*stack = (*stack) -> next;
-	aux -> next = NULL;
-	return (aux);
-}
-*/
-/* TODO 
-
-	Movemos dos elementos a stackB, iteramos A, calculamos coste para num en funcion
-	de la posicion 
-
-*/
-/*
 void goodSort (t_stack **stackA, t_stack **stackB)
 {
-
 	t_stack *auxiA;
 	t_stack *auxiB;
-
 
 	auxiA = *stackA;
 	auxiB = *stackB;
@@ -276,37 +212,32 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	int cost;
 
 	cost = 0;
-	if(get_pos(stack, node) <= (ft_lstsize(stack)) / 2)
+	if(get_pos(stack, node) <= (ft_lstsize(*stack)) / 2)
 		cost = get_pos(stack,node) - 1;
 	else
-		ft_lstsize(stack) - get_pos(stack,node) + 1;
-	
+		cost = ft_lstsize(*stack) - get_pos(stack,node) + 1;
 	return cost;
 }
 
-
-void moveB (t_stack **stackA, t_stack **stackB, t_stack *node)
+void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
-	if (get_pos(stackA, node) < (ft_lstsize(stackA) / 2))
-		while(*stackA != node)
-			rotate_a(stackA);
-	else if (get_pos(stackA,node) > (ft_lstsize(stackA) / 2))
-		while (*stackA != node)
-			reverse_rotate_a(stackA);
-	if (stackA == node)
-		push_b(stackA,stackB);		
+	if (get_pos(stackB,getRightPos(node ->content, stackB)) < (ft_lstsize(*stackB) / 2))
+		while(*stackB != getRightPos(node -> content, stackB))
+			rotate_b(stackB);
+	else if (get_pos(stackB,getRightPos(node ->content, stackB)) > (ft_lstsize(*stackB) / 2))
+		while (*stackB != getRightPos(node -> content, stackB))
+			reverse_rotate_b(stackB);
 }
 
-
-void moveA (t_stack **stackA, t_stack **stackB, t_stack *node)
+void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
-	if (get_pos(stackA, node) < (ft_lstsize(stackA) / 2))
+	if (get_pos(stackA, node) < (ft_lstsize(*stackA) / 2))
 		while(*stackA != node)
 			rotate_a(stackA);
-	else if (get_pos(stackA,node) > (ft_lstsize(stackA) / 2))
+	else if (get_pos(stackA,node) > (ft_lstsize(*stackA) / 2))
 		while (*stackA != node)
 			reverse_rotate_a(stackA);
-	if (stackA == node)
+	if (*stackA == node)
 		push_b(stackA,stackB);		
 }
 
@@ -316,34 +247,50 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	
 	aux = *stackA;
 	int cost = 0;
+	push_b(stackA,stackB);
+	push_b(stackA,stackB);
 	
-	while (*stackA && isOrder(*stackA) == 1)
-	{
 		int currentMinCost = __INT_MAX__;
+		t_stack *cheaperNode;
+
+
+int numero = 5;
+	while (numero > 0)
+	{
+		cheaperNode = NULL;
 		while (aux)
 		{
 			cost = calculateCostA(stackA, aux);
 			cost += calculateCostB(stackB, aux);
+
+			//printf("coste: %d, valor variable auxiliar: %d", cost , aux -> content);
 			if (currentMinCost > cost)
+			{
 				currentMinCost = cost;
-			aux = aux -> next;	
+				cheaperNode = aux;
+			}
+			aux = aux -> next;
+		cheaperNode++;	
 		}
-	// se entiende que se ha alcanzado el nodo con el menor coste posible.
-	// se mueve el nodo al principio de la lista de A, 
+		//moveBcheaperNode (stackB, cheaperNode);
+		//moveinAandToB(stackA,stackB,cheaperNode);
 
-	
+		numero --;	
 	}
-/*
-
- 4 
- 3
- 1
-10
- 5
- 8
- 
-*/
-
-
-	
 }
+
+/*
+         10
+    	  5
+	      4
+          1
+    2
+	9
+	3
+	8
+   21
+    7
+   50
+   11
+   
+*/

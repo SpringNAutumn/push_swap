@@ -6,13 +6,11 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/11 16:46:16 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:54:09 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-// incluir atoi, operaciones de listas. 
 
 void	ft_lstadd_back(t_stack **lst, t_stack *new)
 {
@@ -116,10 +114,4 @@ int	get_pos (t_stack **list, t_stack *node)
 		aux = aux -> next;
 	}
 	return pos;
-}
-
-int isNode(t_stack **stack, t_stack *node)
-{
-	if ()
-
 }
