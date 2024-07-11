@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/08 19:17:47 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:24:02 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int main (int argc, char *argv[])
 	stack_B = NULL;
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-
-
 /*
 	si stack es mayor a 3
 	->>>
@@ -201,6 +199,7 @@ void goodSort (t_stack **stackA, t_stack **stackB)
 	}
 }
 */
+
 t_stack *getRightPos (int num, t_stack **stack)
 {
 	t_stack *nodomin;
@@ -285,21 +284,66 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
-move ()
+
+void moveB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
+	if (get_pos(stackA, node) < (ft_lstsize(stackA) / 2))
+		while(*stackA != node)
+			rotate_a(stackA);
+	else if (get_pos(stackA,node) > (ft_lstsize(stackA) / 2))
+		while (*stackA != node)
+			reverse_rotate_a(stackA);
+	if (stackA == node)
+		push_b(stackA,stackB);		
+}
+
+
+void moveA (t_stack **stackA, t_stack **stackB, t_stack *node)
+{
+	if (get_pos(stackA, node) < (ft_lstsize(stackA) / 2))
+		while(*stackA != node)
+			rotate_a(stackA);
+	else if (get_pos(stackA,node) > (ft_lstsize(stackA) / 2))
+		while (*stackA != node)
+			reverse_rotate_a(stackA);
+	if (stackA == node)
+		push_b(stackA,stackB);		
+}
+
+void bigAlgo(t_stack **stackA, t_stack **stackB)
+{
+	t_stack *aux;
+	
+	aux = *stackA;
+	int cost = 0;
+	
+	while (*stackA && isOrder(*stackA) == 1)
+	{
+		int currentMinCost = __INT_MAX__;
+		while (aux)
+		{
+			cost = calculateCostA(stackA, aux);
+			cost += calculateCostB(stackB, aux);
+			if (currentMinCost > cost)
+				currentMinCost = cost;
+			aux = aux -> next;	
+		}
+	// se entiende que se ha alcanzado el nodo con el menor coste posible.
+	// se mueve el nodo al principio de la lista de A, 
+
+	
+	}
+/*
+
+ 4 
+ 3
+ 1
+10
+ 5
+ 8
+ 
+*/
 
 
 	
 }
-
-/*
-
- 5  10
- 1   7
- 6   3
- 7   1
- 2   8
-20 
-40
-
-*/
