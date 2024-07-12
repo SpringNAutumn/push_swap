@@ -333,17 +333,4 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 
 	
 	}
-/*
-
- 4 
- 3
- 1
-10
- 5
- 8
- 
-*/
-
-
-	
 }
