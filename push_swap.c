@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/11 20:46:03 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:23:42 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,13 +232,19 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
 	if (get_pos(stackA, node) < (ft_lstsize(*stackA) / 2))
-		while(*stackA != node)
-			rotate_a(stackA);
-	else if (get_pos(stackA,node) > (ft_lstsize(*stackA) / 2))
-		while (*stackA != node)
-			reverse_rotate_a(stackA);
+		while(*stackA)
+		{
+			if(*stackA != node)
+				rotate_a(stackA);
+		}
+	else if (get_pos(stackA, node) > (ft_lstsize(*stackA) / 2))
+		while (*stackA)
+		{
+			if(*stackA != node)
+				reverse_rotate_a(stackA);
+		}
 	if (*stackA == node)
-		push_b(stackA,stackB);		
+		push_b(stackA, stackB);
 }
 
 void bigAlgo(t_stack **stackA, t_stack **stackB)
@@ -253,28 +259,27 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		int currentMinCost = __INT_MAX__;
 		t_stack *cheaperNode;
 
-
-int numero = 5;
+	cheaperNode = *stackB;
+	int numero = 3;
 	while (numero > 0)
 	{
-		cheaperNode = NULL;
 		while (aux)
 		{
 			cost = calculateCostA(stackA, aux);
 			cost += calculateCostB(stackB, aux);
-
+		
 			//printf("coste: %d, valor variable auxiliar: %d", cost , aux -> content);
-			if (currentMinCost > cost)
+			if (cost < currentMinCost)
 			{
 				currentMinCost = cost;
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
-		cheaperNode++;	
 		}
-		//moveBcheaperNode (stackB, cheaperNode);
-		//moveinAandToB(stackA,stackB,cheaperNode);
-
+		printf ("valor del cheaper node: %d , puntero del cheaper node: %p", cheaperNode -> content , cheaperNode);
+		moveBcheaperNode (stackB, cheaperNode);
+		moveinAandToB(stackA,stackB,cheaperNode);
+		// nos da un bucle infinito al iterar.
 		numero --;	
 	}
 }
