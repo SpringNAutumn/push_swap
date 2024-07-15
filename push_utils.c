@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/11 18:54:09 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:17:00 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int ft_lstsize(t_stack *stack)
 	while(stack)
 	{
 		count++;
-		stack = stack -> next;		
+		stack = stack -> next;
 	}
 	return count;
 }

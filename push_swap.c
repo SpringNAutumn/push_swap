@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/12 15:23:42 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:11:07 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,15 @@ int main (int argc, char *argv[])
 		rellenar_stacks(&stack_A, argv);
 
 	rellenar_stacks(&stack_B,arrelenar);
+	
+	ft_lstiter(stack_A,printing);
+	printf("\n");
+	ft_lstiter(stack_B,printing);
+
+	
 	bigAlgo(&stack_A, &stack_B);
+
+	printf("resultado de mover en stackB el cheaper node \n");
 	
 	ft_lstiter(stack_B,printing);
     return (0);
@@ -231,18 +239,14 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
+
+printf("valor del nodo: %d" , node -> content);
 	if (get_pos(stackA, node) < (ft_lstsize(*stackA) / 2))
-		while(*stackA)
-		{
-			if(*stackA != node)
-				rotate_a(stackA);
-		}
+		while(*stackA != node)
+			rotate_a(stackA);
 	else if (get_pos(stackA, node) > (ft_lstsize(*stackA) / 2))
-		while (*stackA)
-		{
-			if(*stackA != node)
-				reverse_rotate_a(stackA);
-		}
+		while (*stackA != node)
+			reverse_rotate_a(stackA);
 	if (*stackA == node)
 		push_b(stackA, stackB);
 }
@@ -256,10 +260,10 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	push_b(stackA,stackB);
 	push_b(stackA,stackB);
 	
-		int currentMinCost = __INT_MAX__;
-		t_stack *cheaperNode;
+	int currentMinCost = __INT_MAX__;
+	t_stack *cheaperNode;
 
-	cheaperNode = *stackB;
+	cheaperNode = *stackA;
 	int numero = 3;
 	while (numero > 0)
 	{
@@ -273,24 +277,28 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 			{
 				currentMinCost = cost;
 				cheaperNode = aux;
+				printf("nodo mas barato: %d" , cheaperNode -> content);
 			}
 			aux = aux -> next;
 		}
-		printf ("valor del cheaper node: %d , puntero del cheaper node: %p", cheaperNode -> content , cheaperNode);
+		printf("nodo mas barato: %d" , cheaperNode -> content);
+		//printf ("valor del cheaper node: %d , puntero del cheaper node: %p", cheaperNode -> content , cheaperNode);
 		moveBcheaperNode (stackB, cheaperNode);
-		moveinAandToB(stackA,stackB,cheaperNode);
-		// nos da un bucle infinito al iterar.
+		//moveinAandToB(stackA,stackB,cheaperNode);
+
 		numero --;	
 	}
 }
 
 /*
-         10
+		  5
+		  4
+		  10
     	  5
 	      4
           1
-    2
-	9
+		  
+	
 	3
 	8
    21

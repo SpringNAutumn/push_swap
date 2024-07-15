@@ -27,6 +27,8 @@ clean:
 fclean: clean
 	$(REMOVE) $(NAME) $(OBJS)
 
+re : fclean all
+
 #Hacemos el ejecutable
 $(NAME):$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
