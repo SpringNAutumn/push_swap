@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/15 17:11:07 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:01:14 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int main (int argc, char *argv[])
 		rellenar_stacks(&stack_A, argv);
 
 	rellenar_stacks(&stack_B,arrelenar);
-	
-	ft_lstiter(stack_A,printing);
-	printf("\n");
-	ft_lstiter(stack_B,printing);
-
-	
 	bigAlgo(&stack_A, &stack_B);
 
 	printf("resultado de mover en stackB el cheaper node \n");
@@ -155,7 +149,7 @@ t_stack *getRightPos (int num, t_stack **stack)
 	nodomin  = aux;
 	while(aux != NULL)
 	{
-		if(aux -> content < num)
+		if(aux -> content < num) 
 		{
 			diff = num - aux -> content;
 			if (diff < currentDif)
@@ -203,10 +197,12 @@ int getMin (t_stack **stack)
 	return min;
 }
 
+
+// coste de mover el nodo especificado, (el 1) en el stack b, esto es poner el inmediatamente menor arriba del todo.
 int calculateCostB (t_stack **stack, t_stack *node)
 {
 	int cost;
-
+	printf("coste de mover el nodo especificado, (el 1) en el stack b %d ", get_pos(stack, getRightPos(node -> content, stack)));
 	cost = 0;
 	if (get_pos(stack, getRightPos(node -> content, stack)) <= ((ft_lstsize(*stack) / 2)))
 		cost = get_pos(stack, getRightPos(node -> content, stack)) - 1;
@@ -229,12 +225,14 @@ int calculateCostA (t_stack **stack, t_stack *node)
 
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
+	printf("valor del nodo: %d \n" , node -> content);
+	printf("posicion del nodo que tenemos que mover : %d ", get_pos(stackB,getRightPos(node ->content, stackB)));
 	if (get_pos(stackB,getRightPos(node ->content, stackB)) < (ft_lstsize(*stackB) / 2))
 		while(*stackB != getRightPos(node -> content, stackB))
-			rotate_b(stackB);
+			printf("iprimiendo: %s", rotate_b(stackB));
 	else if (get_pos(stackB,getRightPos(node ->content, stackB)) > (ft_lstsize(*stackB) / 2))
 		while (*stackB != getRightPos(node -> content, stackB))
-			reverse_rotate_b(stackB);
+			printf(" impriminendo: %s", reverse_rotate_b(stackB));
 }
 
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
@@ -255,11 +253,12 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 {
 	t_stack *aux;
 	
-	aux = *stackA;
+	
 	int cost = 0;
 	push_b(stackA,stackB);
 	push_b(stackA,stackB);
-	
+	aux = *stackA;
+	ft_lstiter(*stackB,printing);
 	int currentMinCost = __INT_MAX__;
 	t_stack *cheaperNode;
 
@@ -271,8 +270,9 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		{
 			cost = calculateCostA(stackA, aux);
 			cost += calculateCostB(stackB, aux);
+			
 		
-			//printf("coste: %d, valor variable auxiliar: %d", cost , aux -> content);
+			printf("coste: %d, valor variable auxiliar: %d", cost , aux -> content);
 			if (cost < currentMinCost)
 			{
 				currentMinCost = cost;
@@ -293,12 +293,15 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 /*
 		  5
 		  4
+		  1
 		  10
-    	  5
-	      4
-          1
+          
 		  
 	
+	2
+	10
+	2
+	9
 	3
 	8
    21
