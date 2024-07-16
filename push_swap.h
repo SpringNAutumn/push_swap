@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <time.h>
 
 typedef struct s_stack
 {
@@ -41,6 +42,9 @@ void	moveBcheaperNode (t_stack **stackB, t_stack *node);
 void	rellenar_stacks(t_stack **stack, char *nums[]);
 void	sorting (t_stack **stackA);
 int		getOrder(t_stack **stack);
+void	smallSorting (t_stack **stackA);
+t_stack *getMaxnode(t_stack **stack);
+char** 	randomlistnum(int size);
 
 // algoritmo de odenacion malo.
 void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);
@@ -49,3 +53,8 @@ void	sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB);
 // algoritmos buenos
 void	bigAlgo(t_stack **stackA, t_stack **stackB);
 void	smallSorting (t_stack **stackA);
+
+
+// A ELIMINAR.
+char	*ft_itoa(int n);
+char	*mallockin(int *cont, long int n);
