@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/16 18:47:58 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:44:30 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,25 @@ int main (int argc, char *argv[])
 {
 	t_stack *stack_A;
 	t_stack *stack_B;
-
+	char	**nums;
 	stack_A = NULL;
 	stack_B = NULL;
 
 	
+	nums = randomlistnum(220);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-	else
-		argv = randomlistnum(1000);
+	else 
+		rellenar_stacks(&stack_A, nums);
+
+
+
+	printf("stack B: \n");
+	// imprimir stack B.
+	ft_lstiter(stack_B,printing);
+	printf("stack A: \n");
+	// imprimir stack A
+	ft_lstiter(stack_A,printing);
 
 	push_b(&stack_A,&stack_B);
 	push_b(&stack_A,&stack_B);
@@ -203,10 +213,16 @@ int calculateCostA (t_stack **stack, t_stack *node)
 // Dado que si es un nuevo minimo tiene que ir encima del maximo. 
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
+	//printf("valor del getmin: %d valor getmaxnode: %d", getMin(stackB), getMaxnode(stackB) -> content);
 	if (node -> content < getMin(stackB))
 	{
+		
 		while(*stackB != getMaxnode(stackB))
-			printf("%s", rotate_b(stackB));
+		{
+			 rotate_b(stackB);
+			//printf("moviendo el maximo");
+			//ft_lstiter(*stackB,printing);
+		}
 	}
 	else while(*stackB != getRightPos(node -> content, stackB))
 			printf("%s", rotate_b(stackB));
@@ -215,9 +231,9 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
 	while(*stackA != node)
-		printf("%s", rotate_a(stackA));
+		rotate_a(stackA);
 	if (*stackA == node)
-		printf("%s", push_b(stackA, stackB));
+		push_b(stackA, stackB);
 }
 
 void bigAlgo(t_stack **stackA, t_stack **stackB)
@@ -242,10 +258,35 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
+			
 		}
-		moveBcheaperNode(stackB, cheaperNode);
-		moveinAandToB(stackA,stackB,cheaperNode);
-	}
+		if(cheaperNode -> content == 16 || cheaperNode -> content == 15)
+		{
+			printf("nodo que vamos a mover: %d \n", cheaperNode -> content);
+			moveBcheaperNode(stackB, cheaperNode);
+			
+		printf("stack B: \n");
+		// imprimir stack B.
+		ft_lstiter(*stackB,printing);
+		printf("stack A: \n");
+		// imprimir stack A
+		ft_lstiter(*stackA,printing);
+		
+		moveinAandToB(stackA,stackB, cheaperNode);
+			
+		printf("stack B: \n");
+		// imprimir stack B.
+		ft_lstiter(*stackB,printing);
+		printf("stack A: \n");
+		// imprimir stack A
+		ft_lstiter(*stackA,printing);
+		}
+		else
+		{	
+			moveBcheaperNode(stackB, cheaperNode);
+			moveinAandToB(stackA,stackB, cheaperNode);
+		}
+}
 }
 
 int		getOrder(t_stack **stack)

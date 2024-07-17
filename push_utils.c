@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/16 19:09:00 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:38:27 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,31 +116,28 @@ int	get_pos (t_stack **list, t_stack *node)
 	return pos;
 }
 
+// aqui nos da un segfault como un piano.
 char** randomlistnum(int size)
 {
+	int numerorand;
 	int i = 0;
 	if (size <= 0) return NULL;
-	int j = 0;
 	char **stringnums = malloc (size * sizeof(char*));
 	if (stringnums == NULL) return NULL;
-	// allocar memoria también a cada digito. y controlar la asignacion si no se ha asignado
-	// correctamente desalocar la memoria.
-	while(stringnums[i])
+	
+	while(i < size)
 	{
-		stringnums[i] = malloc (5 * sizeof(char));
-		if (stringnums[i])
+		numerorand = rand() % 220;
+		if(isNotInList(stringnums, numerorand) != 0)
+			stringnums[i] = ft_itoa(numerorand);
+		else continue;
+		if (!stringnums[i])
 		{
-			while (j < i)
-			{
-				free(stringnums[j]);
-				j++;
-			}
+			while (i-- > 0)
+				free(stringnums[i]);
 			free(stringnums);
+			return NULL;
 		}
-		return NULL;
-		stringnums[i] = ft_itoa(rand() % 1000);
-		if (!stringnums[i+1])
-			stringnums[i] = "\0";
 		i ++;
 	}
 	return stringnums;
@@ -195,3 +192,29 @@ char	*mallockin(int *cont, long int n)
 	}
 	return (str);
 }
+
+int isNotInList(char **list, int numero)
+{
+	int i = 0;
+	
+	if (!list || !*list)
+		return 1;
+		
+	while (list[i])
+	{
+		if(numero == atoi(list[i]))
+			return 0;
+		i++;
+	}
+	return 1;
+}
+
+/*
+
+4	10
+3	5
+2	9
+6
+8
+
+*/

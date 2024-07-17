@@ -55,6 +55,7 @@ void	bigAlgo(t_stack **stackA, t_stack **stackB);
 void	smallSorting (t_stack **stackA);
 
 
-// A ELIMINAR.
+// para tests a eliminar.
 char	*ft_itoa(int n);
 char	*mallockin(int *cont, long int n);
+int	isNotInList(char **stack, int numero);
