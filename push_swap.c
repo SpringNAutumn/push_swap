@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/18 18:38:17 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:39:38 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main (int argc, char *argv[])
 	// int numberMovements = 0;
 
 	
-	nums = randomlistnum(100);
+	nums = randomlistnum(10);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else 
@@ -30,6 +30,13 @@ int main (int argc, char *argv[])
 
 	push_b(&stack_A,&stack_B);
 	push_b(&stack_A,&stack_B);
+	printf("stack B: \n");
+	// imprimir stack B. 
+	ft_lstiter(stack_B,printing);
+	printf("stack A: \n");
+	// // imprimir stack A
+ 	ft_lstiter(stack_A,printing);
+	
 	bigAlgo(&stack_A, &stack_B);
 	smallSorting(&stack_A);
 	
@@ -40,12 +47,12 @@ int main (int argc, char *argv[])
 	
 	// //while(ft_lstsize(stack_B) > 0)
 	// 	//push_a(&stack_A, &stack_A);
-	// 		printf("stack B: \n");
-	// // imprimir stack B. 
-	// ft_lstiter(stack_B,printing);
-	// printf("stack A: \n");
+	//printf("stack B: \n");
+	// imprimir stack B. 
+	//ft_lstiter(stack_B,printing);
+	//printf("stack A: \n");
 	// // imprimir stack A
-	// ft_lstiter(stack_A,printing);
+ ft_lstiter(stack_A,printing);
 
 	
     return (0);
@@ -248,9 +255,22 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 				write(1, reverse_rotate_b(stackB), 3);
 			}
 	}
-	else while(*stackB != getRightPos(node -> content, stackB))
+	else
 	{
-		write(1, rotate_b(stackB), 3);
+	
+		printf("la posicion a donde lo vamos a mover: %d, y el get right pos: %d \n", get_pos(stackB, getRightPos(node -> content, stackB)), getRightPos(node -> content, stackB) ->content);
+		if (get_pos(stackB, getRightPos(node -> content, stackB)) < (ft_lstsize(*stackB) / 2 + 1))
+		{ 
+			while(*stackB != getRightPos(node -> content, stackB))
+			{
+				write(1, rotate_b(stackB), 3);
+			}
+		}
+		else
+			while(*stackB != getRightPos(node -> content, stackB))
+			{
+				write(1, reverse_rotate_b(stackB), 3);
+			}
 	}
 }
 
@@ -261,7 +281,7 @@ void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 		if(get_pos(stackA,node) < ft_lstsize(*stackA) / 2 + 1)
 			write(1, rotate_a(stackA), 3);
 		else
-			write(1, reverse_rotate_a(stackA), 3);
+			write(1, reverse_rotate_a(stackA), 4);
 	}	
 	if (*stackA == node)
 		write(1, push_b(stackA, stackB), 3);
@@ -273,26 +293,40 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	t_stack *cheaperNode;
 	
 	int cost = 0;
+	//int diff;
 	aux = *stackA;
-	int currentMinCost = __INT_MAX__;
+	int currentMinCost;
 	
 	while (ft_lstsize(*stackA) > 3)
 	{
+		currentMinCost = 9999999;
 		cheaperNode = *stackA;
 		while (aux)
 		{
 			cost = calculateCostA(stackA, aux);
 			cost += calculateCostB(stackB, aux);
+			printf("coste: %d \n" , cost);
 			if (cost < currentMinCost)
 			{
 				currentMinCost = cost;
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
+			//printf("el menor coste: %d , para el numero: %d \n", cost, cheaperNode -> content);
 		}	
+			printf("el menor coste: %d , para el numero: %d \n", currentMinCost, cheaperNode -> content);
+		printf("stack B: \n");
+		// imprimir stack B. 
+		ft_lstiter(*stackB,printing);
+		printf("stack A: \n");
+		// // imprimir stack A
+ 		ft_lstiter(*stackA,printing);
+		
 			moveBcheaperNode(stackB, cheaperNode);
-			moveinAandToB(stackA,stackB, cheaperNode);
-		}
+			moveinAandToB(stackA, stackB, cheaperNode);
+			aux = *stackA;
+			
+	}
 }
 
 int		getOrder(t_stack **stack)
@@ -356,9 +390,9 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 }
 
 /*
-	4
-	5
-	10
+	4   6
+	5	7
+   10   1
 	6
 	6
 	6

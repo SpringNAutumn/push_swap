@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/18 17:54:23 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:22:56 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	get_pos (t_stack **list, t_stack *node)
 
 	pos = 1;
 	aux = *list;
-	while(aux != NULL)
+	while(aux)
 	{
 		if (aux == node)
 			break;
