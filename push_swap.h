@@ -45,6 +45,7 @@ int		getOrder(t_stack **stack);
 void	smallSorting (t_stack **stackA);
 t_stack *getMaxnode(t_stack **stack);
 char** 	randomlistnum(int size);
+int		isEven(t_stack **stack);
 
 // algoritmo de odenacion malo.
 void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);
@@ -53,6 +54,7 @@ void	sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB);
 // algoritmos buenos
 void	bigAlgo(t_stack **stackA, t_stack **stackB);
 void	smallSorting (t_stack **stackA);
+void	movetoA (t_stack **stackA, t_stack **stackB);
 
 
 // para tests a eliminar.

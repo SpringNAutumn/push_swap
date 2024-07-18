@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/17 19:44:30 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:38:17 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,14 @@ int main (int argc, char *argv[])
 	char	**nums;
 	stack_A = NULL;
 	stack_B = NULL;
+	// int numberMovements = 0;
 
 	
-	nums = randomlistnum(220);
+	nums = randomlistnum(100);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else 
 		rellenar_stacks(&stack_A, nums);
-
-
-
-	printf("stack B: \n");
-	// imprimir stack B.
-	ft_lstiter(stack_B,printing);
-	printf("stack A: \n");
-	// imprimir stack A
-	ft_lstiter(stack_A,printing);
 
 	push_b(&stack_A,&stack_B);
 	push_b(&stack_A,&stack_B);
@@ -42,14 +34,19 @@ int main (int argc, char *argv[])
 	smallSorting(&stack_A);
 	
 	while(stack_B -> content != getMax(&stack_B))
-		rotate_b(&stack_B);
+		write(1, rotate_b(&stack_B), 3);
+
+	movetoA(&stack_A, &stack_B);
 	
-	printf("stack B: \n");
-	// imprimir stack B.
-	ft_lstiter(stack_B,printing);
-	printf("stack A: \n");
-	// imprimir stack A
-	ft_lstiter(stack_A,printing);
+	// //while(ft_lstsize(stack_B) > 0)
+	// 	//push_a(&stack_A, &stack_A);
+	// 		printf("stack B: \n");
+	// // imprimir stack B. 
+	// ft_lstiter(stack_B,printing);
+	// printf("stack A: \n");
+	// // imprimir stack A
+	// ft_lstiter(stack_A,printing);
+
 	
     return (0);
 }
@@ -104,14 +101,15 @@ void smallSorting (t_stack **stackA)
 		if (ft_lstsize(*stackA) == 2)
 		{
 			if ((*stackA) -> content > (*stackA) -> next ->content)
-				swap_a(stackA);
+				write(1, swap_a(stackA), 3);
 		}
 		else if (ft_lstsize(*stackA) == 3)
 			{
 				if ((*stackA) -> content > (*stackA) -> next -> content)
-					swap_a(stackA);
+					write(1, swap_a(stackA), 3);
 				if ((*stackA) -> next -> content > (*stackA) -> next -> next -> content)
-					printf("%s",reverse_rotate_a(stackA));
+					write(1, reverse_rotate_a(stackA), 4);
+
 			}
 	}
 }
@@ -165,7 +163,7 @@ int getMax (t_stack **stack)
 
 	aux = *stack;
 	max = aux -> content;
-	while(aux -> next)
+	while(aux)
 	{
 		if (aux -> content > max)
 			max = aux -> content;
@@ -196,16 +194,40 @@ int calculateCostB (t_stack **stack, t_stack *node)
 {
 	int cost;
 	if (node -> content < getMin(stack))
-		cost = get_pos(stack, getMaxnode(stack)) - 1;
-	 else 
-	 	cost = get_pos(stack, getRightPos(node -> content, stack)) - 1;
+	{
+			if(get_pos(stack, getMaxnode(stack)) <= ft_lstsize(*stack) / 2 + 1)
+				cost = get_pos(stack, getMaxnode(stack)) - 1;
+			else
+			{
+				if (isEven(stack) == 1)
+					cost = (ft_lstsize(*stack) - get_pos(stack, getMaxnode(stack))) + 1;
+				else	
+					cost = (ft_lstsize(*stack) - get_pos(stack, getMaxnode(stack))) + 2;
+			}
+	}
+	 else
+	 {
+		if (get_pos(stack, getRightPos(node -> content, stack)) <= ft_lstsize(*stack) / 2 + 1)
+	 		cost = get_pos(stack, getRightPos(node -> content, stack)) - 1;
+		else
+			if (isEven(stack) == 1)
+				cost = (ft_lstsize(*stack) - get_pos(stack, getRightPos(node -> content, stack))) + 1;
+			else
+				cost = (ft_lstsize(*stack) - get_pos(stack, getRightPos(node -> content, stack))) + 2;
+	 }
 	return cost;
 }
 
 int calculateCostA (t_stack **stack, t_stack *node)
 {
 	int cost;
-	cost = get_pos(stack,node);
+	if (get_pos(stack,node) <= ft_lstsize(*stack) / 2 + 1)
+		cost = get_pos(stack,node);
+	else
+		if (isEven(stack) == 1)
+			cost = ft_lstsize(*stack) - get_pos(stack,node) + 2;
+		else
+			cost = ft_lstsize(*stack) - get_pos(stack,node) + 3;
 	return cost;
 }
 
@@ -213,27 +235,36 @@ int calculateCostA (t_stack **stack, t_stack *node)
 // Dado que si es un nuevo minimo tiene que ir encima del maximo. 
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
-	//printf("valor del getmin: %d valor getmaxnode: %d", getMin(stackB), getMaxnode(stackB) -> content);
 	if (node -> content < getMin(stackB))
 	{
-		
-		while(*stackB != getMaxnode(stackB))
-		{
-			 rotate_b(stackB);
-			//printf("moviendo el maximo");
-			//ft_lstiter(*stackB,printing);
-		}
+		if(get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1)
+			while(*stackB != getMaxnode(stackB))
+			{
+				write(1, rotate_b(stackB), 3);
+			}
+		else
+			while(*stackB != getMaxnode(stackB))
+			{
+				write(1, reverse_rotate_b(stackB), 3);
+			}
 	}
 	else while(*stackB != getRightPos(node -> content, stackB))
-			printf("%s", rotate_b(stackB));
+	{
+		write(1, rotate_b(stackB), 3);
+	}
 }
 
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
 	while(*stackA != node)
-		rotate_a(stackA);
+	{
+		if(get_pos(stackA,node) < ft_lstsize(*stackA) / 2 + 1)
+			write(1, rotate_a(stackA), 3);
+		else
+			write(1, reverse_rotate_a(stackA), 3);
+	}	
 	if (*stackA == node)
-		push_b(stackA, stackB);
+		write(1, push_b(stackA, stackB), 3);
 }
 
 void bigAlgo(t_stack **stackA, t_stack **stackB)
@@ -258,35 +289,10 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
-			
-		}
-		if(cheaperNode -> content == 16 || cheaperNode -> content == 15)
-		{
-			printf("nodo que vamos a mover: %d \n", cheaperNode -> content);
-			moveBcheaperNode(stackB, cheaperNode);
-			
-		printf("stack B: \n");
-		// imprimir stack B.
-		ft_lstiter(*stackB,printing);
-		printf("stack A: \n");
-		// imprimir stack A
-		ft_lstiter(*stackA,printing);
-		
-		moveinAandToB(stackA,stackB, cheaperNode);
-			
-		printf("stack B: \n");
-		// imprimir stack B.
-		ft_lstiter(*stackB,printing);
-		printf("stack A: \n");
-		// imprimir stack A
-		ft_lstiter(*stackA,printing);
-		}
-		else
-		{	
+		}	
 			moveBcheaperNode(stackB, cheaperNode);
 			moveinAandToB(stackA,stackB, cheaperNode);
 		}
-}
 }
 
 int		getOrder(t_stack **stack)
@@ -311,3 +317,54 @@ t_stack *getMaxnode(t_stack **stack)
 		aux = aux -> next;
 	return aux;
 }
+
+void movetoA (t_stack **stackA, t_stack **stackB)
+{
+	t_stack *auxA;
+	t_stack *auxB;
+
+	auxA = *stackA;
+	auxB = *stackB;
+	while (auxA ->next)
+		auxA = auxA ->next;
+		
+	while (auxB)
+	{
+		if (auxB-> content > auxA ->content)
+		{
+			write (1, push_a(stackA, stackB), 3);
+			auxB = *stackB;
+		}
+		else
+		{
+			if (getMin(stackA) > auxB -> content)
+			{		
+				write (1, reverse_rotate_a(stackA), 4);
+				while (auxB)
+				{
+					write (1, push_a(stackA, stackB), 3);
+					auxB = *stackB;
+				}
+				break;
+			}
+			write (1, reverse_rotate_a(stackA), 4);
+			auxA = *stackA;
+			while (auxA ->next && auxB)
+				auxA = auxA ->next;
+		}
+	}
+}
+
+/*
+	4
+	5
+	10
+	6
+	6
+	6
+	3
+	35
+	24
+	11
+	12
+*/

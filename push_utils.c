@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/17 19:38:27 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:54:23 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char** randomlistnum(int size)
 	
 	while(i < size)
 	{
-		numerorand = rand() % 220;
+		numerorand = rand() % 500;
 		if(isNotInList(stringnums, numerorand) != 0)
 			stringnums[i] = ft_itoa(numerorand);
 		else continue;
@@ -209,12 +209,10 @@ int isNotInList(char **list, int numero)
 	return 1;
 }
 
-/*
-
-4	10
-3	5
-2	9
-6
-8
-
-*/
+int isEven(t_stack **stack)
+{
+	if (ft_lstsize(*stack) % 2 == 0)	
+		return 1;
+	else 
+		return 0;
+}
