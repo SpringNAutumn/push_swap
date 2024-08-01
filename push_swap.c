@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/07/19 20:08:11 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:05:50 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 	stack_A = NULL;
 	stack_B = NULL;
 	
-	nums = randomlistnum(150);
+	nums = randomlistnum(500);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else 
