@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/01 18:05:50 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:10:15 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
 	nums = randomlistnum(500);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
-	else 
+	else
 		rellenar_stacks(&stack_A, nums);
 
 	push_b(&stack_A,&stack_B);
@@ -225,8 +225,7 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
-// No siempre encima del inmediatamente menor al numero, 
-// Dado que si es un nuevo minimo tiene que ir encima del maximo. 
+// Aqui tenemos que devoler el valor de donde lo vamos a mover (o hacerlo en una funcion externa)
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
 	if (node -> content < getMin(stackB))
@@ -314,6 +313,13 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// // imprimir stack A
  		//ft_lstiter(*stackA,printing);
 		
+
+		// ver posicion del nodo que vamos a mover,
+		// ver posicion a donde lo movemos en B.
+
+		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
+		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
+				
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
 		aux = *stackA;
@@ -380,3 +386,34 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
+
+
+
+
+
+
+
+// a savemoving vamos a pasarle, la posicon de cada stack. la posicion del stack b no la hemos determinado en la funcion por lo que la tendremos que pasar de alguna forma. ya sea por medio de una funcion externa
+// para luego en la funcion solo mover e número.
+void savemoving (int posA, int posB, t_stack **stackA, t_stack **stackB)
+{
+
+
+
+
+	
+}
+
+// comprobar que las mitades para ahorrar movimientos estén bien calculadas.
+
+/*
+	Caso de que sea impar el stack, numero del medio incluido (no rotar, mas costoso). 
+	A partir de ahí rotar.
+	En caso de que sea par el stack, sumar uno, este elemeno no se rota, rotar a partir de ahí
+*/
+
+
+/*
+implmentar ahorro de costes:
+	un contador, cuando sea igual o menor, apliamos operaciones dobles de rotate y reverse rotate.
+*/
