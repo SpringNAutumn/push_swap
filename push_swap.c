@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 20:00:39 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:29:20 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
 		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
 		
-		savingmoves();
+		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
 		aux = *stackA;
@@ -384,44 +384,45 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
+
+
+/* cosas que teniamos que tener en cuenta: al tener dos stacks y hacer movimientos dobles:
+
+	comprobar que los dos elementos que estamos rotando, estén en sus respetivas mitades, ya que para una mitad hacemos rotate y para la otra reverse rotate
+	una vez comprbado, lo que hacemos es rotar mientras que el numero no sea mayor a su aterior posicon, vamos hasta 0
+
+*/
 void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
-	int posA;
-	int posB;
-
-	// corregir las mitades para que sean exactas.
-	posA = get_pos(stackA, cheaperNode);
 	if (cheaperNode -> content < getMin(stackB))
 	{
-		posB = get_pos(stackB, getMaxnode(stackB));
 		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2) && get_pos(stackB, getMaxnode(stackB)) < ft_lstsize(stackB) / 2))
 		{
-			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getMaxnode(stackB)) < posB)
+			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
 			{
 				rotate_ab(stackA,stackB);
 			}
 		}
 		else
 		{
-			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getMaxnode(stackB)) < posB)
+			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
 			{
-				rotate_ab(stackA,stackB);
+				reverse_rotate_ab(stackA,stackB);
 			}
 		}
 	}	
 	else 
 	{
-		posB = get_pos (stackB, getRightPos(cheaperNode -> content, stackA));
 		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(stackB) / 2))
 		{
-			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < posB)
+			while (*stackA != cheaperNode  && *stackB != getRightPos(cheaperNode -> content, stackA))
 			{
-				reverse_rotate_ab(stackA,stackB);
+				rotate_ab(stackA,stackB);
 			}
 		}
 		else
 		{
-			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < posB)
+			while (*stackA != cheaperNode && *stackB != getRightPos(cheaperNode -> content, stackA))
 			{
 				reverse_rotate_ab(stackA,stackB);
 			}
@@ -429,3 +430,13 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
+/*
+
+4	2
+5	6
+7	8
+2	10
+6	16
+9	21
+
+*/

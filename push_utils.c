@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 19:57:40 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:09:13 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_lstadd_front (t_stack **lst, t_stack *new)
 	new -> next = *lst;
 	*lst = new;
 }
-
+// empieza desde posicion 1
 int	get_pos (t_stack **list, t_stack *node)
 {
 	int pos;
