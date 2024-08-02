@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/01 19:10:15 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:02:26 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ int calculateCostA (t_stack **stack, t_stack *node)
 // Aqui tenemos que devoler el valor de donde lo vamos a mover (o hacerlo en una funcion externa)
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
+	// aqui tenemos que extraer la posicion del getmaxnode. que es el que nos va a servir para calcular la posicion y compararla 
 	if (node -> content < getMin(stackB))
 	{
 		if(get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1)
@@ -243,7 +244,7 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 	}
 	else
 	{
-	
+	 // y aqui la posicion del getRightPos. 
 		//printf("la posicion a donde lo vamos a mover: %d, y el get right pos: %d \n", get_pos(stackB, getRightPos(node -> content, stackB)), getRightPos(node -> content, stackB) ->content);
 		if (get_pos(stackB, getRightPos(node -> content, stackB)) < (ft_lstsize(*stackB) / 2 + 1))
 		{ 
@@ -313,10 +314,8 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// // imprimir stack A
  		//ft_lstiter(*stackA,printing);
 		
-
 		// ver posicion del nodo que vamos a mover,
 		// ver posicion a donde lo movemos en B.
-
 		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
 		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
 				
@@ -381,24 +380,18 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 			}
 			write (1, reverse_rotate_a(stackA), 4);
 			auxA = *stackA;
-			while (auxA ->next && auxB)
-				auxA = auxA ->next;
+			while (auxA -> next && auxB)
+				auxA = auxA -> next;
 		}
 	}
 }
 
 
-
-
-
-
-
-// a savemoving vamos a pasarle, la posicon de cada stack. la posicion del stack b no la hemos determinado en la funcion por lo que la tendremos que pasar de alguna forma. ya sea por medio de una funcion externa
+// a savemoving vamos a pasarle, la posicon de cada stack. ya sea por medio de una funcion externa
 // para luego en la funcion solo mover e número.
-void savemoving (int posA, int posB, t_stack **stackA, t_stack **stackB)
+void savingmoves (t_stack *maxPosB, t_stack *rightPosB, int posA, t_stack **stackA, t_stack **stackB)
 {
-
-
+	
 
 
 	
