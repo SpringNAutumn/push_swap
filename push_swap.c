@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 18:02:26 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:00:39 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,10 +225,10 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
-// Aqui tenemos que devoler el valor de donde lo vamos a mover (o hacerlo en una funcion externa)
+// en moveBcheapernode devolveremos la posicion en notacion numerica de donde se encuentra el nodo que vamos a colocar. 
+// (siempre colocaremos el numero por encima)
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
-	// aqui tenemos que extraer la posicion del getmaxnode. que es el que nos va a servir para calcular la posicion y compararla 
 	if (node -> content < getMin(stackB))
 	{
 		if(get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1)
@@ -244,8 +244,6 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 	}
 	else
 	{
-	 // y aqui la posicion del getRightPos. 
-		//printf("la posicion a donde lo vamos a mover: %d, y el get right pos: %d \n", get_pos(stackB, getRightPos(node -> content, stackB)), getRightPos(node -> content, stackB) ->content);
 		if (get_pos(stackB, getRightPos(node -> content, stackB)) < (ft_lstsize(*stackB) / 2 + 1))
 		{ 
 			while(*stackB != getRightPos(node -> content, stackB))
@@ -318,7 +316,8 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// ver posicion a donde lo movemos en B.
 		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
 		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
-				
+		
+		savingmoves();
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
 		aux = *stackA;
@@ -385,28 +384,48 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
-
-
-// a savemoving vamos a pasarle, la posicon de cada stack. ya sea por medio de una funcion externa
-// para luego en la funcion solo mover e número.
-void savingmoves (t_stack *maxPosB, t_stack *rightPosB, int posA, t_stack **stackA, t_stack **stackB)
+void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
-	
+	int posA;
+	int posB;
 
-
-	
+	// corregir las mitades para que sean exactas.
+	posA = get_pos(stackA, cheaperNode);
+	if (cheaperNode -> content < getMin(stackB))
+	{
+		posB = get_pos(stackB, getMaxnode(stackB));
+		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2) && get_pos(stackB, getMaxnode(stackB)) < ft_lstsize(stackB) / 2))
+		{
+			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getMaxnode(stackB)) < posB)
+			{
+				rotate_ab(stackA,stackB);
+			}
+		}
+		else
+		{
+			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getMaxnode(stackB)) < posB)
+			{
+				rotate_ab(stackA,stackB);
+			}
+		}
+	}	
+	else 
+	{
+		posB = get_pos (stackB, getRightPos(cheaperNode -> content, stackA));
+		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(stackB) / 2))
+		{
+			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < posB)
+			{
+				reverse_rotate_ab(stackA,stackB);
+			}
+		}
+		else
+		{
+			while (get_pos(stackA, cheaperNode) < posA && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < posB)
+			{
+				reverse_rotate_ab(stackA,stackB);
+			}
+			
+		}
+	}
 }
-
-// comprobar que las mitades para ahorrar movimientos estén bien calculadas.
-
-/*
-	Caso de que sea impar el stack, numero del medio incluido (no rotar, mas costoso). 
-	A partir de ahí rotar.
-	En caso de que sea par el stack, sumar uno, este elemeno no se rota, rotar a partir de ahí
-*/
-
-
-/*
-implmentar ahorro de costes:
-	un contador, cuando sea igual o menor, apliamos operaciones dobles de rotate y reverse rotate.
-*/
