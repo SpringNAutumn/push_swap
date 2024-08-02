@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 20:44:06 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:52:56 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 	stack_A = NULL;
 	stack_B = NULL;
 	
-	nums = randomlistnum(500);
+	nums = randomlistnum(50);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
@@ -320,8 +320,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
-		aux = *stackA;
-			
+		aux = *stackA;	
 	}
 }
 
@@ -397,11 +396,12 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
 	if (cheaperNode -> content < getMin(stackB))
 	{
-		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2 + 1) && get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(stackB) / 2 + 1))
+		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2 + 1) && get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1))
 		{
 			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
 			{
 				rotate_ab(stackA,stackB);
+				
 			}
 		}
 		else
@@ -414,7 +414,7 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 	}	
 	else 
 	{
-		if(((get_pos(stackA, cheaperNode) < ft_lstsize(stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(stackB) / 2 + 1))
+		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(*stackB) / 2 + 1))
 		{
 			while (*stackA != cheaperNode  && *stackB != getRightPos(cheaperNode -> content, stackA))
 			{
@@ -431,15 +431,3 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
-/*
-
-4	2
-5	6
-7	8
-2	10
-6	16
-9	21
-
-*/
-
-// en et max node va a tener que ser =. en los demás no.

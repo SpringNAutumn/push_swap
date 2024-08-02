@@ -46,6 +46,7 @@ void	smallSorting (t_stack **stackA);
 t_stack *getMaxnode(t_stack **stack);
 char** 	randomlistnum(int size);
 int		isEven(t_stack **stack);
+void	savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB);
 
 // algoritmo de odenacion malo.
 void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);
