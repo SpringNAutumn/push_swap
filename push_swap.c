@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 20:52:56 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:44:30 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int main (int argc, char *argv[])
 	stack_A = NULL;
 	stack_B = NULL;
 	
-	nums = randomlistnum(50);
+	nums = randomlistnum(100);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
 		rellenar_stacks(&stack_A, nums);
 
 	push_b(&stack_A,&stack_B);
-	push_b(&stack_A,&stack_B);	
+	push_b(&stack_A,&stack_B);
 	bigAlgo(&stack_A, &stack_B);
 	smallSorting(&stack_A);
 	
@@ -316,7 +316,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// ver posicion a donde lo movemos en B.
 		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
 		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
-		
+	
 		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
@@ -385,24 +385,21 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 }
 
 
-/* cosas que teniamos que tener en cuenta: al tener dos stacks y hacer movimientos dobles:
+/* debuggerar*/
 
-	comprobar que los dos elementos que estamos rotando, estén en sus respetivas mitades, ya que para una mitad hacemos rotate y para la otra reverse rotate
-	una vez comprbado, lo que hacemos es rotar mientras que el numero no sea mayor a su aterior posicon, vamos hasta 0
-
-*/
-// ver las mitades: 
-void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
+void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
 	if (cheaperNode -> content < getMin(stackB))
 	{
+		// rotamos sin comprobar si uno es menor al otro.
 		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2 + 1) && get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1))
 		{
 			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
 			{
+				printf("rotando tanto a como b: \n");
 				rotate_ab(stackA,stackB);
-				
 			}
+			printing((*stackA) -> content);
 		}
 		else
 		{
@@ -410,16 +407,20 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 			{
 				reverse_rotate_ab(stackA,stackB);
 			}
+				printing((*stackA) -> content);
 		}
 	}	
-	else 
+	else
 	{
+		// rotamos sin comprobar si uno es menor al otro. 
 		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(*stackB) / 2 + 1))
 		{
 			while (*stackA != cheaperNode  && *stackB != getRightPos(cheaperNode -> content, stackA))
 			{
 				rotate_ab(stackA,stackB);
 			}
+				printf("rotando tanto a como b: \n");
+				printing((*stackA) -> content);
 		}
 		else
 		{
@@ -427,7 +428,13 @@ void savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 			{
 				reverse_rotate_ab(stackA,stackB);
 			}
-			
+				printing((*stackA) -> content);
 		}
 	}
+
+	printf("stackA \n");
+	ft_lstiter(*stackA, printing);
+	printf("\n");
+	printf("stackB \n");
+	ft_lstiter(*stackB, printing);
 }

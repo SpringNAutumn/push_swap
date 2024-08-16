@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/02 20:52:59 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:44:36 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char** randomlistnum(int size)
 	
 	while(i < size)
 	{
-		numerorand = rand() % 50;
+		numerorand = rand() % 100;
 		if(isNotInList(stringnums, numerorand) != 0)
 			stringnums[i] = ft_itoa(numerorand);
 		else continue;
