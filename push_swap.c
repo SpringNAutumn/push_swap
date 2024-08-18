@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/16 17:44:30 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:25:25 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int main (int argc, char *argv[])
 	stack_A = NULL;
 	stack_B = NULL;
 	
-	nums = randomlistnum(100);
+	srand(time(NULL));
+	nums = randomlistnum(500);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
@@ -36,10 +37,9 @@ int main (int argc, char *argv[])
 		write(1, rotate_b(&stack_B), 3);
 
 	movetoA(&stack_A, &stack_B);
-	// //while(ft_lstsize(stack_B) > 0)
-	// 	//push_a(&stack_A, &stack_A);
+	 //while(ft_lstsize(stack_B) > 0)
+	 	//push_a(&stack_A, &stack_A);
 	//printf("stack B: \n");
-	// imprimir stack B. 
 	//ft_lstiter(stack_B,printing);
 	//printf("stack A: \n");
 	// // imprimir stack A
@@ -229,35 +229,25 @@ int calculateCostA (t_stack **stack, t_stack *node)
 // (siempre colocaremos el numero por encima)
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
-	if (node -> content < getMin(stackB))
-	{
-		if(get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1)
-			while(*stackB != getMaxnode(stackB))
-			{
-				write(1, rotate_b(stackB), 3);
-			}
-		else
-			while(*stackB != getMaxnode(stackB))
-			{
-				write(1, reverse_rotate_b(stackB), 4);
-			}
-	}
+	t_stack *targetB;
+
+	if(node -> content < getMin(stackB))
+		targetB = getMaxnode(stackB);
 	else
-	{
-		if (get_pos(stackB, getRightPos(node -> content, stackB)) < (ft_lstsize(*stackB) / 2 + 1))
-		{ 
-			while(*stackB != getRightPos(node -> content, stackB))
-			{
-				write(1, rotate_b(stackB), 3);
-			}
+		targetB = getRightPos(node -> content, stackB);
+		
+	if(get_pos(stackB, targetB) <= ft_lstsize(*stackB) / 2 + 1)
+		while(*stackB != targetB)
+		{
+			write(1, rotate_b(stackB), 3);
 		}
-		else
-			while(*stackB != getRightPos(node -> content, stackB))
-			{
-				write(1, reverse_rotate_b(stackB), 4);
-			}
-	}
+	else
+		while(*stackB != targetB)
+		{
+			write(1, reverse_rotate_b(stackB), 4);
+		}
 }
+
 
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
@@ -312,10 +302,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		// // imprimir stack A
  		//ft_lstiter(*stackA,printing);
 		
-		// ver posicion del nodo que vamos a mover,
-		// ver posicion a donde lo movemos en B.
-		// comprobar que sea menor o mayor a la mitad del stack para implementar o rotate_ab o reverse_rotate_ab
-		// tenemos que ver tambien posicion respectiva dependiendo del tamaño del stack. mientras que ninuno haya llegado al final de las posiciones de sus respectivos stacks, hacer operaciones dobles.
+		// me esta dando mas movimientos por el calculo del coste, calculamos el coste, acto seguido, ahorramos los movimientos y movemos el cheaperNode.
 	
 		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
@@ -386,55 +373,43 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 
 
 /* debuggerar*/
+/*
+ La logica de saving moves:
+	tenemos los dos stacks, antes de mover normalmente los numeros, lo que queremos hacer es mover tanto el numero del stack A como el numero del stack b correspondiente hasta que uno de los dos 
+	llegue hasta el principio del stack
+*/
 
 void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
-	if (cheaperNode -> content < getMin(stackB))
-	{
-		// rotamos sin comprobar si uno es menor al otro.
-		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2 + 1) && get_pos(stackB, getMaxnode(stackB)) <= ft_lstsize(*stackB) / 2 + 1))
-		{
-			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
-			{
-				printf("rotando tanto a como b: \n");
-				rotate_ab(stackA,stackB);
-			}
-			printing((*stackA) -> content);
-		}
-		else
-		{
-			while (*stackA != cheaperNode && *stackB != getMaxnode(stackB))
-			{
-				reverse_rotate_ab(stackA,stackB);
-			}
-				printing((*stackA) -> content);
-		}
-	}	
-	else
-	{
-		// rotamos sin comprobar si uno es menor al otro. 
-		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2) && get_pos(stackB, getRightPos(cheaperNode -> content, stackA)) < ft_lstsize(*stackB) / 2 + 1))
-		{
-			while (*stackA != cheaperNode  && *stackB != getRightPos(cheaperNode -> content, stackA))
-			{
-				rotate_ab(stackA,stackB);
-			}
-				printf("rotando tanto a como b: \n");
-				printing((*stackA) -> content);
-		}
-		else
-		{
-			while (*stackA != cheaperNode && *stackB != getRightPos(cheaperNode -> content, stackA))
-			{
-				reverse_rotate_ab(stackA,stackB);
-			}
-				printing((*stackA) -> content);
-		}
-	}
+	t_stack *targetB;
 
-	printf("stackA \n");
-	ft_lstiter(*stackA, printing);
-	printf("\n");
-	printf("stackB \n");
-	ft_lstiter(*stackB, printing);
+	if (cheaperNode -> content < getMin(stackB))
+		targetB = getMaxnode(stackB);
+	else
+		targetB = getRightPos(cheaperNode -> content, stackB);
+	
+	while (*stackA != cheaperNode && *stackB != targetB)
+	{
+		if(((get_pos(stackA, cheaperNode) < ft_lstsize(*stackA) / 2 + 1) && 
+			get_pos(stackB, targetB) <= ft_lstsize(*stackB) / 2 + 1))
+			rotate_ab(stackA,stackB);
+		else if(((get_pos(stackA, cheaperNode) > ft_lstsize(*stackA) / 2 + 1) && 
+			get_pos(stackB, targetB) >= ft_lstsize(*stackB) / 2 + 1))
+			reverse_rotate_ab(stackA,stackB);
+		else
+			break ;
+	}
 }
+
+// el caso en el que un numero este en la mitad superior y el otro en la mitad inferior 
+
+/*
+
+ 4	13
+ 6	52
+ 8	5
+ 10	6
+ 14	6
+ 20 8
+
+*/
