@@ -17,7 +17,7 @@ REMOVE = rm -rf
 OBJS = $(SRCS:.c=.o)
 
 # compilamos la libreria junto a todos los otros archivos
-LDFLAGS = -L$(LIBFT_DIR) -lftb
+# LDFLAGS = -L$(LIBFT_DIR) -lftb
 
 all: $(NAME)
 
@@ -31,7 +31,7 @@ re : fclean all
 
 #Hacemos el ejecutable
 $(NAME):$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 t: test
 test: all

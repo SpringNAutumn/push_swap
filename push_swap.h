@@ -1,3 +1,6 @@
+#ifndef PUSH_SWAP_H
+#define PUSH_SWAP_H
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -9,7 +12,7 @@ typedef struct s_stack
 	struct s_stack	*next;
 }	t_stack;
 
-void	printing(int ontent);
+void	printing(int content);
 void	ft_lstadd_back(t_stack **lst, t_stack *new);
 t_stack	*ft_lstnew(int content);
 int		ft_atoi(const char *nptr);
@@ -61,4 +64,6 @@ void	movetoA (t_stack **stackA, t_stack **stackB);
 // para tests a eliminar.
 char	*ft_itoa(int n);
 char	*mallockin(int *cont, long int n);
-int	isNotInList(char **stack, int numero);
+int		isNotInList(char **stack, int numero);
+
+#endif
