@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/18 16:25:25 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:55:12 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ int main (int argc, char *argv[])
 		write(1, rotate_b(&stack_B), 3);
 
 	movetoA(&stack_A, &stack_B);
-	 //while(ft_lstsize(stack_B) > 0)
-	 	//push_a(&stack_A, &stack_A);
-	//printf("stack B: \n");
-	//ft_lstiter(stack_B,printing);
-	//printf("stack A: \n");
-	// // imprimir stack A
- 	//ft_lstiter(stack_A,printing);
     return (0);
 }
 
@@ -227,6 +220,7 @@ int calculateCostA (t_stack **stack, t_stack *node)
 
 // en moveBcheapernode devolveremos la posicion en notacion numerica de donde se encuentra el nodo que vamos a colocar. 
 // (siempre colocaremos el numero por encima)
+
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
 	t_stack *targetB;
@@ -280,12 +274,6 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 		{
 			cost = calculateCostA(stackA, aux);
 			cost += calculateCostB(stackB, aux);
-			//printf("coste: %d \n" , cost);
-			// imprimir lineas
-			//printf("stack B: \n");
-			//ft_lstiter(*stackB, printing);
-			//printf("stack A: \n");
-			//ft_lstiter(*stackA,printing);
 			if (cost < currentMinCost)
 			{
 				currentMinCost = cost;
@@ -294,16 +282,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 			aux = aux -> next;
 		//printf("el menor coste: %d , para el numero: %d \n", cost, cheaperNode -> content);
 		}
-		//printf("el menor coste: %d , para el numero: %d \n", currentMinCost, cheaperNode -> content);
-		//printf("stack B: \n");
-		// imprimir stack B. 
-		//ft_lstiter(*stackB,printing);
-		//printf("stack A: \n");
-		// // imprimir stack A
- 		//ft_lstiter(*stackA,printing);
-		
 		// me esta dando mas movimientos por el calculo del coste, calculamos el coste, acto seguido, ahorramos los movimientos y movemos el cheaperNode.
-	
 		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
@@ -371,14 +350,6 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 	}
 }
 
-
-/* debuggerar*/
-/*
- La logica de saving moves:
-	tenemos los dos stacks, antes de mover normalmente los numeros, lo que queremos hacer es mover tanto el numero del stack A como el numero del stack b correspondiente hasta que uno de los dos 
-	llegue hasta el principio del stack
-*/
-
 void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
 	t_stack *targetB;
@@ -400,16 +371,3 @@ void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 			break ;
 	}
 }
-
-// el caso en el que un numero este en la mitad superior y el otro en la mitad inferior 
-
-/*
-
- 4	13
- 6	52
- 8	5
- 10	6
- 14	6
- 20 8
-
-*/
