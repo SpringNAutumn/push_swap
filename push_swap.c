@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/18 16:55:12 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:02:23 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@ int main (int argc, char *argv[])
 {
 	t_stack *stack_A;
 	t_stack *stack_B;
-	char	**nums;
 	
 	stack_A = NULL;
 	stack_B = NULL;
 	
-	srand(time(NULL));
-	nums = randomlistnum(500);
-	if (argc > 1)
+	// hacer comprobacion de errores.
+	if (argc >= 1)
 		rellenar_stacks(&stack_A, argv);
 	else
-		rellenar_stacks(&stack_A, nums);
+		return (0);
 
 	push_b(&stack_A,&stack_B);
 	push_b(&stack_A,&stack_B);
@@ -61,6 +59,7 @@ int isOrder(t_stack **stack)
 
 void rellenar_stacks(t_stack **stack, char *nums[])
 {
+	// aqui ira la comprobacion de errores. 
 	int i;
 	t_stack *add;
 
@@ -77,7 +76,6 @@ void rellenar_stacks(t_stack **stack, char *nums[])
 		i++;
 	}
 }
-
 
 void smallSorting (t_stack **stackA)
 {
@@ -100,23 +98,6 @@ void smallSorting (t_stack **stackA)
 			}
 	}
 }
-
-/*
-void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
-{
-	while (*stackA)
-	{
-		while ((*stackB) && (*stackB) -> content > (*stackA) -> content)
-		{
-			printf("%s",push_a(stackA, stackB));
-			printf("%s",swap_a(stackA));
-		}
-		printf("%s",push_b(stackA,stackB));
-	}
-	while(*stackB)
-		printf("%s",push_a(stackA,stackB));
-}
-*/
 
 t_stack	*getRightPos (int num, t_stack **stack)
 {
@@ -218,9 +199,6 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
-// en moveBcheapernode devolveremos la posicion en notacion numerica de donde se encuentra el nodo que vamos a colocar. 
-// (siempre colocaremos el numero por encima)
-
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
 	t_stack *targetB;
@@ -262,7 +240,6 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	t_stack *cheaperNode;
 	
 	int cost = 0;
-	//int diff;
 	aux = *stackA;
 	int currentMinCost;
 	
@@ -280,10 +257,7 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
-		//printf("el menor coste: %d , para el numero: %d \n", cost, cheaperNode -> content);
 		}
-		// me esta dando mas movimientos por el calculo del coste, calculamos el coste, acto seguido, ahorramos los movimientos y movemos el cheaperNode.
-		savingmoves(cheaperNode,stackA,stackB);
 		moveBcheaperNode(stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
 		aux = *stackA;	
