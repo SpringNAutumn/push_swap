@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/28 18:02:23 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:46:32 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ int main (int argc, char *argv[])
 	
 	stack_A = NULL;
 	stack_B = NULL;
-	
-	// hacer comprobacion de errores.
-	if (argc >= 1)
+	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
 		return (0);
 
-	push_b(&stack_A,&stack_B);
-	push_b(&stack_A,&stack_B);
+	if (ft_lstsize(stack_A) < 3)
+			smallSorting(&stack_A);
+	else
+	{ 
+		push_b(&stack_A,&stack_B);
+		push_b(&stack_A,&stack_B);
+	}
 	bigAlgo(&stack_A, &stack_B);
 	smallSorting(&stack_A);
 	
@@ -57,15 +60,17 @@ int isOrder(t_stack **stack)
 	return 0;
 }
 
+// cuando hay menos de 3 elementos en el stack nos da segfault ya que intentamos operar con un tercer elemento.
+
 void rellenar_stacks(t_stack **stack, char *nums[])
 {
-	// aqui ira la comprobacion de errores. 
 	int i;
 	t_stack *add;
 
 	i = 1;
 	if(!stack)
 		return ;
+		
 	while(nums[i])
 	{
 		add = ft_lstnew(ft_atoi(nums[i]));
@@ -81,7 +86,7 @@ void smallSorting (t_stack **stackA)
 {
 	if(!stackA || !(*stackA))
 		return ;
-	
+	printf ("hasta aqui llegamos");
 	while (getOrder(stackA) != 0)
 	{
 		if (ft_lstsize(*stackA) == 2)
