@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/29 15:01:13 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:59:30 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,22 @@ int isNotInList(char **list, int numero)
 	return 1;
 }
 
+int isNotInStack(t_stack **stack, int numero)
+{
+	t_stack *aux;
+	
+	if (!stack || !*stack)
+		return 0;
+	aux = *stack;
+	while (aux)
+	{
+		if( aux -> content == numero)
+			return 0;
+		aux = aux -> next;
+	}
+	return 1;
+}
+
 int isEven(t_stack **stack)
 {
 	if (ft_lstsize(*stack) % 2 == 0)	
@@ -217,3 +233,7 @@ int isEven(t_stack **stack)
 		return 0;
 }
 
+void printing (int content)
+{
+	printf("%d\n", content);
+}

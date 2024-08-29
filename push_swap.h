@@ -47,6 +47,7 @@ t_stack *getMaxnode(t_stack **stack);
 char** 	randomlistnum(int size);
 int		isEven(t_stack **stack);
 void	savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB);
+int isNotInStack(t_stack **stack, int numero);
 
 // algoritmo de odenacion malo.
 void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);
