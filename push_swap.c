@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/28 19:50:45 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:59:47 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
 	if (ft_lstsize(stack_A) < 3)
 	{
 			smallSorting(&stack_A);
-			return (0) ;
+			return (0);
 	}
 	push_b(&stack_A, &stack_B);
 	push_b(&stack_A, &stack_B);
@@ -60,8 +60,6 @@ int isOrder(t_stack **stack)
 	}
 	return 0;
 }
-
-// control: tenemos que comprobar tanto caracteres, como espacios
 
 void rellenar_stacks(t_stack **stack, char *nums[])
 {
@@ -164,6 +162,8 @@ int getMin (t_stack **stack)
 	return min;
 }
 
+
+// podemos refactorizar
 int calculateCostB (t_stack **stack, t_stack *node)
 {
 	int cost;
@@ -205,6 +205,7 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
+// quizas podamos refactorizar
 void moveBcheaperNode (t_stack **stackB, t_stack *node)
 {
 	t_stack *targetB;
@@ -248,7 +249,6 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	int cost = 0;
 	aux = *stackA;
 	int currentMinCost;
-	
 	while (ft_lstsize(*stackA) > 3)
 	{
 		currentMinCost = 9999999;
@@ -293,6 +293,7 @@ t_stack *getMaxnode(t_stack **stack)
 	return aux;
 }
 
+// ultimo movimiento para mover todos los elemento al stackA. 
 void movetoA (t_stack **stackA, t_stack **stackB)
 {
 	t_stack *auxA;
@@ -302,10 +303,9 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 	auxB = *stackB;
 	while (auxA -> next)
 		auxA = auxA -> next;
-		
 	while (auxB)
 	{
-		if (auxB-> content > auxA ->content)
+		if (auxB-> content > auxA -> content)
 		{
 			write (1, push_a(stackA, stackB), 3);
 			auxB = *stackB;
