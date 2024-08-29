@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/28 18:18:07 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:19:18 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main (int argc, char *argv[])
 	stack_B = NULL;
 	
 	srand(time(NULL));
-	nums = randomlistnum(100);
+	nums = randomlistnum(500);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
@@ -36,6 +36,7 @@ int main (int argc, char *argv[])
 	while(stack_B -> content != getMax(&stack_B))
 		write(1, rotate_b(&stack_B), 3);
 
+	
 	movetoA(&stack_A, &stack_B);
     return (0);
 }
@@ -78,7 +79,6 @@ void rellenar_stacks(t_stack **stack, char *nums[])
 	}
 }
 
-
 void smallSorting (t_stack **stackA)
 {
 	if(!stackA || !(*stackA))
@@ -100,23 +100,6 @@ void smallSorting (t_stack **stackA)
 			}
 	}
 }
-
-/*
-void sortingAlgorithNoTmp(t_stack **stackA, t_stack **stackB)
-{
-	while (*stackA)
-	{
-		while ((*stackB) && (*stackB) -> content > (*stackA) -> content)
-		{
-			printf("%s",push_a(stackA, stackB));
-			printf("%s",swap_a(stackA));
-		}
-		printf("%s",push_b(stackA,stackB));
-	}
-	while(*stackB)
-		printf("%s",push_a(stackA,stackB));
-}
-*/
 
 t_stack	*getRightPos (int num, t_stack **stack)
 {
@@ -218,13 +201,11 @@ int calculateCostA (t_stack **stack, t_stack *node)
 	return cost;
 }
 
-// en moveBcheapernode devolveremos la posicion en notacion numerica de donde se encuentra el nodo que vamos a colocar. 
-// (siempre colocaremos el numero por encima)
-
-void moveBcheaperNode (t_stack **stackB, t_stack *node)
+void moveBcheaperNode (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
 	t_stack *targetB;
 
+	savingmoves(node, stackA, stackB);
 	if(node -> content < getMin(stackB))
 		targetB = getMaxnode(stackB);
 	else
@@ -241,7 +222,6 @@ void moveBcheaperNode (t_stack **stackB, t_stack *node)
 			write(1, reverse_rotate_b(stackB), 4);
 		}
 }
-
 
 void moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node)
 {
@@ -262,10 +242,8 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 	t_stack *cheaperNode;
 	
 	int cost = 0;
-	//int diff;
 	aux = *stackA;
 	int currentMinCost;
-	
 	while (ft_lstsize(*stackA) > 3)
 	{
 		currentMinCost = 9999999;
@@ -280,11 +258,8 @@ void bigAlgo(t_stack **stackA, t_stack **stackB)
 				cheaperNode = aux;
 			}
 			aux = aux -> next;
-		//printf("el menor coste: %d , para el numero: %d \n", cost, cheaperNode -> content);
 		}
-		// me esta dando mas movimientos por el calculo del coste, calculamos el coste, acto seguido, ahorramos los movimientos y movemos el cheaperNode.
-		savingmoves(cheaperNode,stackA,stackB);
-		moveBcheaperNode(stackB, cheaperNode);
+		moveBcheaperNode(stackA, stackB, cheaperNode);
 		moveinAandToB(stackA, stackB, cheaperNode);
 		aux = *stackA;	
 	}
@@ -313,6 +288,36 @@ t_stack *getMaxnode(t_stack **stack)
 	return aux;
 }
 
+void	movetoA(t_stack **stackA, t_stack **stackB) {
+    t_stack *auxA;
+    t_stack *auxB;
+
+    while (*stackB) {
+        auxA = *stackA;
+        auxB = *stackB;
+        while (auxA -> next)
+            auxA = auxA -> next;
+
+        if (auxB -> content > auxA-> content) {
+            write(1, push_a(stackA, stackB), 3);
+        } else {
+            if (auxA-> content > auxB->content) {
+                write(1, reverse_rotate_a(stackA), 4);
+                auxA = *stackA;
+                while (auxA->next)
+                    auxA = auxA->next;
+            }
+            write(1, push_a(stackA, stackB), 3);
+
+            while (auxA != *stackA) {
+                write(1, rotate_a(stackA), 3);
+                auxA = *stackA;
+            }
+        }
+    }
+}
+
+/*
 void movetoA (t_stack **stackA, t_stack **stackB)
 {
 	t_stack *auxA;
@@ -322,16 +327,15 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 	auxB = *stackB;
 	while (auxA -> next)
 		auxA = auxA -> next;
-		
 	while (auxB)
 	{
-		if (auxB-> content > auxA ->content)
+		if (auxB -> content > auxA -> content)
 		{
 			write (1, push_a(stackA, stackB), 3);
 			auxB = *stackB;
 		}
 		else
-		{
+		{ 
 			if (getMin(stackA) > auxB -> content)
 			{		
 				write (1, reverse_rotate_a(stackA), 4);
@@ -349,7 +353,7 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 		}
 	}
 }
-
+*/
 void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
 	t_stack *targetB;
@@ -371,3 +375,7 @@ void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 			break ;
 	}
 }
+
+
+
+

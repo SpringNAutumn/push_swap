@@ -38,7 +38,7 @@ int		calculateCostB (t_stack **stack, t_stack *node);
 t_stack *getRightPos (int num, t_stack **stack);
 void	goodSort (t_stack **stackA, t_stack **stackB);
 void	moveinAandToB (t_stack **stackA, t_stack **stackB, t_stack *node);
-void	moveBcheaperNode (t_stack **stackB, t_stack *node);
+void	moveBcheaperNode (t_stack **stackA, t_stack **stackB, t_stack *node);
 void	rellenar_stacks(t_stack **stack, char *nums[]);
 void	sorting (t_stack **stackA);
 int		getOrder(t_stack **stack);
