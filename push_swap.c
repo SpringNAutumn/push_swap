@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/29 18:59:21 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 18:44:59 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void rellenar_stacks(t_stack **stack, char *nums[])
 		return ;
 
 	// mientras haya numeros y no estén ya metidos. 
-	while(nums[i] && isNotInStack(stack, nums[i]) == 1)
+	while(nums[i] && isNotInStack(stack, ft_atoi((nums[i]))))
 	{
 		add = ft_lstnew(ft_atoi(nums[i]));
 		if(!(*stack))
@@ -168,6 +168,7 @@ int getMin (t_stack **stack)
 	return min;
 }
 
+// refactorizar 
 int calculateCostB (t_stack **stack, t_stack *node)
 {
 	int cost;
@@ -362,6 +363,7 @@ void movetoA (t_stack **stackA, t_stack **stackB)
 	}
 }
 */
+
 void	savingmoves(t_stack *cheaperNode, t_stack **stackA, t_stack **stackB)
 {
 	t_stack *targetB;
