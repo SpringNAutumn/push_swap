@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/29 18:59:30 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:16:47 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,6 @@ int isNotInStack(t_stack **stack, int numero)
 {
 	t_stack *aux;
 	
-	if (!stack || !*stack)
-		return 0;
 	aux = *stack;
 	while (aux)
 	{

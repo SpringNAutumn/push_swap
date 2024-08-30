@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/30 19:07:23 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:14:29 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void rellenar_stacks(t_stack **stack, char *nums[])
 	if(!stack)
 		return ;
 
-	// mientras haya numeros y no estén ya metidos. 
+	// mientras haya numeros y no estén ya metidos.
 	while(nums[i] && isNotInStack(stack, ft_atoi((nums[i]))))
 	{
 		add = ft_lstnew(ft_atoi(nums[i]));
