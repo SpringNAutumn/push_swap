@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/30 19:02:12 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:07:23 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int main (int argc, char *argv[])
 			return (0);
 	}
 	*/
-	
 	srand(time(NULL));
 	nums = randomlistnum(500);
 	if (argc > 1)
@@ -50,6 +49,11 @@ int main (int argc, char *argv[])
 
 	
 	movetoA(&stack_A, &stack_B);
+
+	// hacer test para comprobar. Si nos da OK significa que el orden del stackA es correcto.
+	if (isOrder(&stack_A))
+		printf("el stack esta ordenado! si falla algo no es el orden");
+	
     return (0);
 }
 
