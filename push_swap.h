@@ -49,6 +49,7 @@ int		isEven(t_stack **stack);
 void	savingmoves (t_stack *cheaperNode, t_stack **stackA, t_stack **stackB);
 int		isNotInStack(t_stack **stack, int numero);
 int 	isOrder(t_stack **stack);
+int		checkErrors(t_stack **stack , int num);
 
 // algoritmo de odenacion malo.
 void	sortingAlgorithWithTmp(t_stack **stackA, t_stack **stackB);

@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:53:30 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/30 19:16:47 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:46:15 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ t_stack	*ft_lstnew(int content)
 	return (new);
 }
 
+// segfaults en el atoi
+// recordemos, para convertir char a numeros
+
+//check: is num, 
 int	ft_atoi(const char *nptr)
 {
 	int	i;
@@ -59,6 +63,7 @@ int	ft_atoi(const char *nptr)
 	o = 1;
 	i = 0;
 	res = 0;
+	
 	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
 		i ++;
 	if (nptr[i] == '-')
@@ -127,7 +132,7 @@ char** randomlistnum(int size)
 	
 	while(i < size)
 	{
-		numerorand = rand() % 500;
+		numerorand = rand() % 100;
 		if(isNotInList(stringnums, numerorand) != 0)
 			stringnums[i] = ft_itoa(numerorand);
 		else continue;
@@ -234,4 +239,18 @@ int isEven(t_stack **stack)
 void printing (int content)
 {
 	printf("%d\n", content);
+}
+
+
+/*
+	Errores a comprobar:
+
+		* numeros duplicados.
+		* argumentos superiores a un numero entero.
+*/
+int checkErrors(t_stack **stack , int num)
+{
+	if (isNotInStack(stack, num)) // y otros errores
+		return 0;
+	else return 1;
 }
