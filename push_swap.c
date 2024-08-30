@@ -6,7 +6,7 @@
 /*   By: gmarin-m <gmarin-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:59:23 by gmarin-m          #+#    #+#             */
-/*   Updated: 2024/08/30 18:44:59 by gmarin-m         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:02:12 by gmarin-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ int main (int argc, char *argv[])
 {
 	t_stack *stack_A;
 	t_stack *stack_B;
-	
+	char **nums;	
 	stack_A = NULL;
 	stack_B = NULL;
+
+	/*
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
@@ -29,15 +31,14 @@ int main (int argc, char *argv[])
 			smallSorting(&stack_A);
 			return (0);
 	}
+	*/
 	
-	/*
 	srand(time(NULL));
 	nums = randomlistnum(500);
 	if (argc > 1)
 		rellenar_stacks(&stack_A, argv);
 	else
 		rellenar_stacks(&stack_A, nums);
-	*/
 
 	push_b(&stack_A,&stack_B);
 	push_b(&stack_A,&stack_B);
